@@ -24,7 +24,7 @@ class Manager:
 
             
     def gen_groups(self):
-        self.group_list = []
+        self.group_list = {}
         for m in self.nist.messages.list_all():
             if m and m.text:
                 # have found a candidate string, now parse link out
