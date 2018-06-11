@@ -1,0 +1,42 @@
+from groupy.client import Client
+import re
+
+NIST_ID = '41064684'
+TOKEN = "61QyU38rd2gpRrGDxK7obK1Re4QrcPelyIKp9EEn"
+
+class Manager:
+    def __init__(self, uid):
+        self.link = re.compile('https://groupme.com/join_group/(\d+)/(\S+)')
+        self.myself = Client.from_token(uid)
+        self.nist = self.retrieve_nist(NIST_ID)
+        self.gen_groups()
+
+    def update(uid):
+        pass
+
+
+    def retrieve_nist(self, uid):
+        # retrieve main group chat
+        for group in self.myself.groups.list_all():
+            if group.id == '41065684':
+                # this is SURF 2018
+                return group
+
+            
+    def gen_groups(self):
+        self.group_list = []
+        for m in self.nist.messages.list_all():
+            if m and m.text:
+                # have found a candidate string, now parse link out
+                result = self.link.search(m.text)
+                if result:
+                    mid,share = result.groups(1)
+                    joined = self.myself.groups.join(mid,share)
+                    self.group_list.append(joined)
+                    
+    def groups(self):
+        return self.group_list
+
+if __name__ == '__main__':
+    m = Manager(TOKEN)
+    print(m.groups())
