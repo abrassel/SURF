@@ -12,7 +12,7 @@ def index():
     if request.json:
         print(request.get_json())
         print(manager.group_list)
-        print(json['id'])
+        print(request.json['id'])
     manager.send_message('this is a test response',)
 
 
