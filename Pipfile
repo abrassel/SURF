@@ -9,6 +9,7 @@ requests = "*"
 scapy = "*"
 groupyapi = "*"
 gunicorn = "*"
+"psycopg2-binary" = "*"
 
 [dev-packages]
 

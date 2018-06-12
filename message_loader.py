@@ -1,8 +1,9 @@
 from groupy.client import Client
 import re
+import os
 
 NIST_ID = '41065684'
-TOKEN = "bogus"
+TOKEN = os.environ.get('token', None)
 BOT_NAME = 'testbot'
 
 class Manager:
@@ -19,6 +20,8 @@ class Manager:
         self.nist = self.retrieve_nist(NIST_ID)
         self.gen_groups()
         self.bot, self.bot_group = self.gen_bots()
+        self.gen_usrs()
+        #self.group_list, self.usr_list
 
 
     def retrieve_nist(self, uid):
@@ -40,6 +43,11 @@ class Manager:
                     joined = self.myself.groups.join(mid,share)
                     self.group_list[joined.id] = joined
 
+    def gen_usrs(self):
+        self.usr_list = {}
+        for usr in self.nist.members:
+            self.usr_list[usr.user_id] = usr
+
     def gen_bots(self):
         for b in self.myself.bots.list():
             if b.name == BOT_NAME:
@@ -47,11 +55,17 @@ class Manager:
                     if m.group_id == b.group_id:
                         return b, m
 
-    def msg_bot(self, msg):
+    def msg_message_bot(self, msg):
         self.bot.post(text=msg)
 
     def send_message(self, msg, dest):
-        self.group_list[dest].post(text=msg)
+        if dest in self.group_list:
+            self.group_list[dest].post(text=msg)
+
+    def send_pm(self, dest, msg):
+        if dest in self.usr_list:
+            self.usr_list[dest].post(text=msg)
+    
         
 
 if __name__ == '__main__':

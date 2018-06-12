@@ -8,18 +8,51 @@ from time import sleep
 app = Flask(__name__)
 manager = message_loader.Manager(TOKEN)
 
+def parse(token):
+    tokens = token.split(' ')
+    cmd = tokens[0]
+    if len(tokens) > 1:
+        args = " ".join(tokens[1:])
+    else:
+        args = None
+
+    return cmd.strip().lower(), args
+
+
 @app.route('/', methods=['GET','POST'])
 def webhook():
     if not request.json:
+        # something fucked up
         return '404'
     
     if request.json['sender_type'] == 'bot':
+        # avoid echoing
         return '200'
 
     
     chat_id = request.args.get('chat',default=NIST_ID,type=str)
     sender_id = request.json['sender_id']
+    cmd, args = parse(request.json['text'])
 
+    help_str = '''
+    valid commands
+    -------------------------
+    - groups: list all groups
+    - join <group>: join group
+    - create <new_group>: create a new group
+    - mute/unmute: admin can mute or unmute bot in a group
+    - add_meme <meme> <tag>: post an image macro in response to a text key phrase (vote majority)
+    - subscribe <usr>: subscribe a user to daily cat facts
+    - report <usr>: report a user for malicious bot usage
+    - unsubscribe: unsubscribe yourself from cat facts (25% chance of success)
+    - help: view available commands (this dialogue)
+    '''
+
+    if match(cmd, 'help'):
+        manager.send_pm(sender_id, help_str)
+
+
+    '''
     
     if "groups" in request.json['text']:
         groups = ""
@@ -56,9 +89,7 @@ def webhook():
                         user.add_to_group(group.group_id)
                         break
                 break
+    ''' # <- Legacy implementations
             
     return '200'
 
-
-if __name__ == '__main__':
-    print('ran')
