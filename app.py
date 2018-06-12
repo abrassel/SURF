@@ -15,8 +15,12 @@ def index():
             groups = ""
             for group in manager.myself.groups.list_all():
                 groups += group.name + "\n"
-            manager.msg_bot(groups)
 
+            ind = 0
+            for ind in range(0,len(groups),100):
+                manager.msg_bot(groups[ind:ind+100])
+            if ind < len(groups):
+                manager.msg_bot(groups[ind:])
     return '200'
 
 
