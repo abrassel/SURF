@@ -22,10 +22,10 @@ def index():
         manager.msg_bot(groups)
 
     if "join" in request.json['text']:
-        target = request.json['text'].split(" ")[1]
+        target = "".join(request.json['text'].split(" ")[1:])
         for group in manager.group_list.values():
             if target.lower() == group.name.lower():
-                manager.msg_bot(group.share_url)
+                manager.msg_bot("%s: %s" % (target,group.share_url))
                 
     
             
