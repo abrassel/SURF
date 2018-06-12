@@ -41,7 +41,7 @@ def webhook():
             if user.user_id == sender_id:
                 user.add_to_group(group.group_id)
                 break
-        result = manager.myself.groups.change_owners(group.id, sender_id)
+        group.change_owners(sender_id)
         #group.leave()
         manager.msg_bot("Created group %s at %s" % (target, group.share_url))
             
