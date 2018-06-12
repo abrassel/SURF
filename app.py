@@ -37,8 +37,7 @@ def webhook():
         target = " ".join(request.json['text'].split(" ")[1:])
         group = manager.myself.groups.create(name=target,share=True)
         manager.group_list[group.id] = group
-        print(manager.bot_group, type(manager.bot_group))
-        for user in manager.bot_group.list_all():
+        for user in manager.bot_group.members:
             if user.user_id == sender_id:
                 user.add_to_group(group.group_id)
                 break
