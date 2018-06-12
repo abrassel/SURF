@@ -9,8 +9,8 @@ manager = message_loader.Manager(TOKEN)
 
 @app.route('/', methods=['POST'])
 def index():
-    if request.json and request.json['name'] != 'Brassel Sprouts':
-        manager.send_message('this is a test response',request.json['group_id'])
+    if request.json and request.json['name'] != 'testbot':
+        manager.msg_bot('this is a test response')
 
 
 if __name__ == '__main__':

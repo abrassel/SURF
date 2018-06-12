@@ -10,6 +10,8 @@ class Manager:
         self.myself = Client.from_token(uid)
         self.nist = self.retrieve_nist(NIST_ID)
         self.gen_groups()
+        self.bot = self.gen_bots()
+
 
     def update(uid):
         pass
@@ -18,7 +20,7 @@ class Manager:
     def retrieve_nist(self, uid):
         # retrieve main group chat
         for group in self.myself.groups.list_all():
-            if group.id == '41065684':
+            if group.id == NIST_ID:
                 # this is SURF 2018
                 return group
 
@@ -33,9 +35,17 @@ class Manager:
                     mid,share = result.groups(1)
                     joined = self.myself.groups.join(mid,share)
                     self.group_list[joined.id] = joined
+
+    def bots(self):
+        for b in self.myself.bots.list_all():
+            if b.name == 'testbot':
+                return b
                     
     def groups(self):
         return self.group_list
+
+    def msg_bot(self, msg):
+        self.bot.post(text=msg)
 
     def send_message(self, msg, dest):
         self.group_list[dest].post(text=msg)
