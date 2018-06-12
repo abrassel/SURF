@@ -48,7 +48,7 @@ def webhook():
     - help: view available commands (this dialogue)
     '''
 
-    if match(cmd, 'help'):
+    if cmd == 'help':
         manager.send_pm(sender_id, help_str)
 
 
