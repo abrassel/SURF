@@ -37,7 +37,7 @@ class Manager:
                     self.group_list[joined.id] = joined
 
     def gen_bots(self):
-        for b in self.myself.bots.list_all():
+        for b in self.myself.bots.list():
             if b.name == 'testbot':
                 return b
                     
