@@ -10,7 +10,7 @@ manager = message_loader.Manager(TOKEN)
 
 def parse(token):
     if token[0] != '!':
-        return
+        return (None, None)
     
     tokens = token.split(' ')
     cmd = tokens[0]
