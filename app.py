@@ -53,7 +53,9 @@ def webhook():
         manager.msg_bot(help_str)
         
     if cmd == 'groups':
-        manager.msg_bot('\n'.join(manager.group_list.values()))
+        manager.msg_bot('\n'.join(
+            [group.name for group in manager.group_list.values()]
+        ))
 
     '''
     
