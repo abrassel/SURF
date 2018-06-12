@@ -32,6 +32,7 @@ def index():
         target = " ".join(request.json['text'].split(" ")[1:])
         group = manager.myself.groups.create(name=target,share=True)
         manager.group_list[group.id] = group
+        manager.myself.groups.change_owners(group.id,request.json['sender_id'])
         manager.msg_bot("Created group %s at %s" % (target, group.share_url))
             
     return '200'
