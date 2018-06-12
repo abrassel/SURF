@@ -25,9 +25,7 @@ def index():
         target = request.json['text'].split(" ")[1]
         for group in manager.group_list.values():
             if target.lower() == group.name.lower():
-                print(group.__dict__)
-                print(group.name)
-                print(group.id)
+                manager.msg_bot(group.share_url)
                 
     
             
