@@ -51,7 +51,6 @@ def webhook():
         target = " ".join(request.json['text'].split(" ")[1:])
         for group in manager.group_list.values():
             if group.name.lower() == target.lower():
-                print(group.name)
                 for user in manager.bot_group.members:
                     if user.user_id == sender_id:
                         user.add_to_group(group.group_id)
