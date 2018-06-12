@@ -30,7 +30,7 @@ def index():
 
     if "create" in request.json['text']:
         target = " ".join(request.json['text'].split(" ")[1:])
-        group = manager.create(target,share=True)
+        group = manager.myself.create(target,share=True)
         manager.group_list[group.id] = group
         manager.msg_bot("Created group % at %" % (target, group.share_url))
             
