@@ -9,6 +9,8 @@ manager = message_loader.Manager(TOKEN)
 
 @app.route('/', methods=['POST'])
 def index():
+    if request.json:
+        print(request.get_json())
     if request.json and request.json['name'] != 'testbot':
         manager.msg_bot('this is a test response')
 
