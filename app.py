@@ -9,6 +9,9 @@ app = Flask(__name__)
 manager = message_loader.Manager(TOKEN)
 
 def parse(token):
+    if token[0] != '!':
+        return
+    
     tokens = token.split(' ')
     cmd = tokens[0]
     if len(tokens) > 1:
@@ -33,6 +36,9 @@ def webhook():
     chat_id = request.args.get('chat',default=NIST_ID,type=str)
     sender_id = request.json['sender_id']
     cmd, args = parse(request.json['text'])
+
+    if not cmd:
+        return '200'
 
     help_str = '''
     valid commands
