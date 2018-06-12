@@ -13,7 +13,7 @@ def parse(token):
         return (None, None)
     
     tokens = token.split(' ')
-    cmd = tokens[0]
+    cmd = tokens[0][1:]
     if len(tokens) > 1:
         args = " ".join(tokens[1:])
     else:
