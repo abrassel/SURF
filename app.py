@@ -49,8 +49,9 @@ def webhook():
     '''
 
     if cmd == 'help':
-        manager.send_pm(sender_id, help_str)
-
+        #manager.send_pm(sender_id, help_str)
+        manager.msg_bot(help_str)
+        
     if cmd == 'groups':
         manager.msg_bot('\n'.join(manager.group_list.values()))
 
