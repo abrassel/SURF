@@ -1,6 +1,6 @@
 from flask import Flask, request
 import message_loader
-from message_loader import TOKEN
+from message_loader import TOKEN, NIST_ID, BOT_NAME
 import json as j
 
 
