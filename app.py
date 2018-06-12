@@ -13,7 +13,7 @@ def index():
 
         if "groups" in request.json['text']:
             groups = ""
-            for group in manager.group_list.list_all():
+            for group in manager.myself.groups.list_all():
                 groups += group.name + "\n"
             manager.msg_bot(groups)
 
