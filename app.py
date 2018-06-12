@@ -12,6 +12,8 @@ def index():
     if request.json and request.json['name'] != 'testbot':
         manager.msg_bot('this is a test response')
 
+    return '200'
+
 
 if __name__ == '__main__':
     print('ran')
