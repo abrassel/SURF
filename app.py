@@ -9,14 +9,28 @@ manager = message_loader.Manager(TOKEN)
 
 @app.route('/', methods=['POST'])
 def index():
-    if request.json and request.json['sender_type'] != 'bot':
+    if not request.json:
+        return '404'
+    
+    if request.json['sender_type'] == 'bot':
+        return '200'
 
-        if "groups" in request.json['text']:
-            groups = ""
-            for group in manager.group_list.values():
-                groups += group.name + "\n"
-            manager.msg_bot(groups)
+    if "groups" in request.json['text']:
+        groups = ""
+        for group in manager.group_list.values():
+            groups += group.name + "\n"
+        manager.msg_bot(groups)
 
+    if "join" in request.json['text']:
+        target = request.json['text'].split(" ")[1]
+        for group in manager.group_list.values():
+            if target.lower() == group.name.lower():
+                print(group.__dict__)
+                print(group.name)
+                print(group.id)
+                
+    
+            
     return '200'
 
 
