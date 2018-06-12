@@ -7,21 +7,26 @@ import json as j
 app = Flask(__name__)
 manager = message_loader.Manager(TOKEN)
 
-@app.route('/', methods=['POST'])
-def index():
+@app.route('/', methods=['GET','POST'])
+def webhook():
     if not request.json:
         return '404'
     
     if request.json['sender_type'] == 'bot':
         return '200'
 
+    
+    chat_id = request.args.get('chat',default=NIST_ID,type=str)
+    sender_id = request.json['sender_id']
+
+    
     if "groups" in request.json['text']:
         groups = ""
         for group in manager.group_list.values():
             groups += group.name + "\n"
         manager.msg_bot(groups)
 
-    if "join" in request.json['text']:
+    if "share" in request.json['text']:
         target = " ".join(request.json['text'].split(" ")[1:])
         for group in manager.group_list.values():
             if target.lower() == group.name.lower():
@@ -32,7 +37,12 @@ def index():
         target = " ".join(request.json['text'].split(" ")[1:])
         group = manager.myself.groups.create(name=target,share=True)
         manager.group_list[group.id] = group
-        manager.myself.groups.change_owners(group.id,request.json['sender_id'])
+        for user in manager.bot_group:
+            if user.user_id == sender_id:
+                user.add_to_group(group.group_id)
+                break
+        result = manager.myself.groups.change_owners(group.id, sender_id)
+        #group.leave()
         manager.msg_bot("Created group %s at %s" % (target, group.share_url))
             
     return '200'
