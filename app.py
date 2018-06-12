@@ -2,6 +2,7 @@ from flask import Flask, request
 import message_loader
 from message_loader import TOKEN, NIST_ID, BOT_NAME
 import json as j
+from time import sleep
 
 
 app = Flask(__name__)
@@ -41,6 +42,7 @@ def webhook():
             if user.user_id == sender_id:
                 user.add_to_group(group.group_id)
                 break
+        sleep(1)
         group.change_owners(sender_id)
         #group.leave()
         manager.msg_bot("Created group %s at %s" % (target, group.share_url))
