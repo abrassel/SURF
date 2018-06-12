@@ -55,7 +55,7 @@ class Manager:
                     if m.group_id == b.group_id:
                         return b, m
 
-    def msg_message_bot(self, msg):
+    def msg_bot(self, msg):
         self.bot.post(text=msg)
 
     def send_message(self, msg, dest):
