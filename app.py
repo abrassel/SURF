@@ -11,7 +11,7 @@ manager = message_loader.Manager(TOKEN)
 def index():
     if request.json and request.json['sender_type'] != 'bot':
 
-        if "groups" in request.json.text:
+        if "groups" in request.json['text']:
             groups = ""
             for group in manager.group_list.list_all():
                 groups += group.name + "\n"
