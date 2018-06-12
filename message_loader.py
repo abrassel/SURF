@@ -36,7 +36,7 @@ class Manager:
                     joined = self.myself.groups.join(mid,share)
                     self.group_list[joined.id] = joined
 
-    def bots(self):
+    def gen_bots(self):
         for b in self.myself.bots.list_all():
             if b.name == 'testbot':
                 return b
