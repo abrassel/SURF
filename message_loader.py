@@ -40,9 +40,6 @@ class Manager:
         for b in self.myself.bots.list():
             if b.name == 'testbot':
                 return b
-                    
-    def groups(self):
-        return self.group_list
 
     def msg_bot(self, msg):
         self.bot.post(text=msg)
