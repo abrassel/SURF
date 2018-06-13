@@ -52,6 +52,9 @@ def webhook():
     - report <usr>: report a user for malicious bot usage
     - unsubscribe: unsubscribe yourself from cat facts (25% chance of success)
     - help: view available commands (this dialogue)
+    - opt-in: opt-in to announcements
+    - opt-out: opt-out of announcements
+    - announce: send group-wide announcement to all opted-in members (admin only)
     '''
 
     if cmd == 'help':

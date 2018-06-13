@@ -1,4 +1,4 @@
-from groupy.client import Client
+from groupy.client import Client, attachments
 import re
 import os
 
@@ -65,7 +65,17 @@ class Manager:
     def send_pm(self, dest, msg):
         if dest in self.usr_list:
             self.usr_list[dest].post(text=msg)
-    
+
+    def mesg_all(self, msg, bot_room):
+        loci = []
+        usr_ids = []
+        for member in bot_room.members:
+            loci.append([0,1])
+            usr_ids.append(member.user_id)
+
+        attachment = attachments.Mentions(loci=loci, user_ids = usr_ids)
+        self.bot.post(text=msg,attachments=[attachment]) 
+        
         
 
 if __name__ == '__main__':
