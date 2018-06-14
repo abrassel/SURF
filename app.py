@@ -6,7 +6,7 @@ from time import sleep
 
 
 app = Flask(__name__)
-manager = message_loader.Manager(TOKEN)
+manager = interface.Manager(TOKEN)
 
 def parse(token):
     if token[0] != '!':
