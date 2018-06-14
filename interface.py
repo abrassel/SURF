@@ -28,7 +28,7 @@ class Manager:
         for room in self.group_list.values():
             self.gen_owner(room)
 
-        self.privileged = defaultdict(lambda: false)
+        self.privileged = defaultdict(lambda: False)
         
 
 
@@ -44,22 +44,25 @@ class Manager:
         group_queue = [self.nist]
         self.group_list = {}
         while group_queue:
-            cur = group_queue.pop()
-            if not cur:
+            try:
+                cur = group_queue.pop()
+                if not cur:
+                    continue
+                for m in cur.messages.list_all():
+                    if m and m.text:
+                        # have found a candidate string, now parse link out
+                        result = self.link.search(m.text)
+                        if result:
+                            mid,share = result.groups(1)
+                            try:
+                                joined = self.myself.groups.join(mid,share)
+                            except Exception:
+                                continue
+                            if joined and joined.id not in self.group_list:
+                                group_queue.append(joined)
+                                self.group_list[joined.id] = joined
+            except Exception:
                 continue
-            for m in cur.messages.list_all():
-                if m and m.text:
-                    # have found a candidate string, now parse link out
-                    result = self.link.search(m.text)
-                    if result:
-                        mid,share = result.groups(1)
-                        try:
-                            joined = self.myself.groups.join(mid,share)
-                        except Exception:
-                            continue
-                        if joined and joined.id not in self.group_list:
-                            group_queue.append(joined)
-                        self.group_list[joined.id] = joined
         
                         
     def gen_usrs(self):
