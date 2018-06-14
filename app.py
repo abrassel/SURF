@@ -71,6 +71,7 @@ def webhook():
     '''
 
     if self.privileged[chat_id] and not manager.is_owner(sender_id, chat_id):
+        print('failed privilege check')
         return '200'
 
     if cmd == 'help':
