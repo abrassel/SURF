@@ -26,17 +26,18 @@ def parse(token):
 def webhook():
     print('started method')
     if not request.json:
-        # something fucked up
+        print('something fucked up')
         return '404'
     
     if request.json['sender_type'] == 'bot':
-        # avoid echoing
+        print('avoid echoing')
         return '200'
 
     
     chat_id = request.args.get('chat',default=None,type=str)
 
     if not chat_id:
+        print('no chat id')
         return '200'
     
     sender_id = request.json['sender_id']
