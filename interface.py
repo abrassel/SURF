@@ -25,7 +25,7 @@ class Manager:
         self.bots = dict([(bot.group_id,bot) for bot in self.myself.bots.list()])
         # gen owners
         self.owners = {}
-        for room in self.group_list:
+        for room in self.group_list.values():
             self.gen_owner(room)
 
         self.privileged = defaultdict(lambda: false)
