@@ -1,6 +1,7 @@
 from groupy.client import Client, attachments
 import re
 import os
+from collections import defaultdict
 
 HOME="Bot Testing Channel"
 #HOME = '41065684'
@@ -21,11 +22,13 @@ class Manager:
         self.nist = self.retrieve_nist(HOME)
         self.gen_groups()
         self.gen_usrs()
-        self.bots = dict([(bot.bot_id,bot) for bot in self.myself.bots.list()])
+        self.bots = dict([(bot.group_id,bot) for bot in self.myself.bots.list()])
         # gen owners
         self.owners = {}
         for room in self.group_list:
             self.gen_owner(room)
+
+        self.privileged = defaultdict(lambda: false)
         
 
 
@@ -67,8 +70,11 @@ class Manager:
     def gen_owner(self, room):
         for member in room.members:
             if "owner" in member.roles:
-                self.owners[member.user_id] == member
+                self.owners[room.id] == member
                 return
+
+    def is_owner(self, user, room):
+        return room.id in self.owners and user.user_id == self.owners[room].user_id
 
         
 
