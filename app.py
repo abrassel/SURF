@@ -76,6 +76,8 @@ def webhook():
 
     if cmd == 'help':
         #manager.send_pm(sender_id, help_str)
+        print('tried to post a message')
+        print(bot)
         bot.post(text=help_str)
         
     if cmd == 'groups':
