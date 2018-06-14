@@ -88,6 +88,8 @@ def webhook():
         ))
 
     if cmd == 'privilege':
+        if not args:
+            return '200'
         if manager.is_owner(sender_id, chat_id):
             if args == 'admin':
                 self.privileged[chat_id] == True
