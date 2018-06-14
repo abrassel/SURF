@@ -44,6 +44,7 @@ def webhook():
     try:
         bot = manager.bots[chat_id]
     except KeyError:
+        print('key error, channel not found')
         return '200'
     
 
