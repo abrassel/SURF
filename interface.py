@@ -56,7 +56,8 @@ class Manager:
                             mid,share = result.groups(1)
                             try:
                                 joined = self.myself.groups.join(mid,share)
-                            except Exception:
+                            except:
+                                print('an exception has been caught')
                                 continue
                             if joined and joined.id not in self.group_list:
                                 group_queue.append(joined)
