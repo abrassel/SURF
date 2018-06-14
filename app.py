@@ -1,5 +1,5 @@
 from flask import Flask, request
-import message_loader
+import interface
 from interface import TOKEN, BOT_NAME
 import json as j
 from time import sleep
