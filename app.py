@@ -1,6 +1,6 @@
 from flask import Flask, request
 import message_loader
-from message_loader import TOKEN, NIST_ID, BOT_NAME
+from interface import TOKEN, BOT_NAME
 import json as j
 from time import sleep
 
@@ -33,7 +33,11 @@ def webhook():
         return '200'
 
     
-    chat_id = request.args.get('chat',default=NIST_ID,type=str)
+    chat_id = request.args.get('chat',default=None,type=str)
+
+    if not chat_id:
+        return '200'
+    
     sender_id = request.json['sender_id']
     cmd, args = parse(request.json['text'])
     
