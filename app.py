@@ -97,7 +97,8 @@ def webhook():
             elif args == 'all':
                 bot.post(text='succesfully deprivileged channel')
                 self.privileged[chat_id] == False
-
+        else:
+            bot.post(text='you are not the admin')    
     
 
     '''
