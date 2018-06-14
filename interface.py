@@ -70,7 +70,7 @@ class Manager:
     def gen_owner(self, room):
         for member in room.members:
             if "owner" in member.roles:
-                self.owners[room.id] == member
+                self.owners[room.id] = member
                 return
 
     def is_owner(self, user, room):
