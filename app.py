@@ -36,6 +36,12 @@ def webhook():
     chat_id = request.args.get('chat',default=NIST_ID,type=str)
     sender_id = request.json['sender_id']
     cmd, args = parse(request.json['text'])
+    
+    try:
+        bot = manager.bots[chat_id]
+    except KeyError:
+        return '200'
+    
 
     if not cmd:
         return '200'
@@ -54,17 +60,34 @@ def webhook():
     - help: view available commands (this dialogue)
     - opt-in: opt-in to announcements
     - opt-out: opt-out of announcements
-    - announce: send group-wide announcement to all opted-in members (admin only)
+    - announce: send group-wide announcement to all opted-in members
+    - hook <channel name>: add bot to channel 
+    - unhook: remove bot from channel
+    - privilege <channel name> <admin/all>: if admin, restrict bot usage to admin/all
     '''
+
+    if self.privileged[chat_id] and not manager.is_owner(sender_id, chat_id):
+        return '200'
 
     if cmd == 'help':
         #manager.send_pm(sender_id, help_str)
-        manager.msg_bot(help_str)
+        bot.post(text=help_str)
         
     if cmd == 'groups':
-        manager.msg_bot('\n'.join(
+        bot.post(text='\n'.join(
             [group.name for group in manager.group_list.values()]
         ))
+
+    if cmd == 'privilege':
+        if manager.is_owner(sender_id, chat_id):
+            if args == 'admin':
+                self.privileged[chat_id] == True
+                bot.post(text='succesfully privileged channel')
+            elif args == 'all':
+                bot.post(text='succesfully deprivileged channel')
+                self.privileged[chat_id] == False
+
+    
 
     '''
     
