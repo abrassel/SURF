@@ -33,9 +33,8 @@ def webhook():
         print('avoid echoing')
         return '200'
 
-    print(request.get_json())
     chat_id = request.args.get('chat',default=None,type=str)
-
+    chat_id = request.json['group_id']
     if not chat_id:
         print('no chat id')
         return '200'
