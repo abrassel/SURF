@@ -78,7 +78,8 @@ def webhook():
         return '200'
 
     elif cmd == 'help':
-        bot.post(text=help_str)
+        if not manager.muted[chat_id]:
+            bot.post(text=help_str)
         
     elif cmd == 'groups':
         if not manager.muted[chat_id]:
