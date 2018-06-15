@@ -30,6 +30,7 @@ class Manager:
             self.gen_owner(room)
 
         self.privileged = defaultdict(lambda: False)
+        self.muted = defaultdict(lambda: False)
         
 
 
@@ -66,7 +67,31 @@ class Manager:
             except Exception:
                 continue
         
-                        
+    def update(self, groups=None, new_bots=None):
+        if groups:
+            for group in groups:
+                self.group_list[group.group_id] = group
+                for member in group.members:
+                    if "owner" in member.roles:
+                        owners[group.group_id] = member
+                        break
+
+        if new_bots:
+            for bot in new_bots:
+                self.bots[bot.group_id] = bot
+
+        elif not groups and not new_bots:
+            self.gen_groups()
+            self.gen_usrs()
+            self.bots = dict([(bot.group_id,bot) for bot in self.myself.bots.list()])
+            # gen owners
+            self.owners = {}
+            for room in self.group_list.values():
+                self.gen_owner(room)
+
+            
+            
+            
     def gen_usrs(self):
         self.usr_list = {}
         for usr in self.nist.members:
@@ -96,7 +121,6 @@ class Manager:
 
     def create(self, chat_id, user_id, room_name):
         group = self.myself.groups.create(name=room_name,share=True)
-        self.group_list[group.group_id] = group
 
         # get member
         for member in self.group_list[chat_id].members:
@@ -106,7 +130,9 @@ class Manager:
 
         sleep(3)
         group.change_owners(user_id)
-        self.bots[chat_id].post(text="Created group %s at %s" % (room_name,group.share_url))
+        if not self.muted[chat_id]:
+            self.bots[chat_id].post(text="Created group %s at %s" % (room_name,group.share_url))
+        self.update(groups=[group])
         
 
 if __name__ == '__main__':

@@ -81,10 +81,18 @@ def webhook():
         bot.post(text=help_str)
         
     elif cmd == 'groups':
-        bot.post(text='\n'.join(
-            [group.name for group in manager.group_list.values()]
-        ))
+        if not manager.muted[chat_id]:
+            bot.post(text='\n'.join(
+                [group.name for group in manager.group_list.values()]
+            ))
 
+    elif cmd == 'mute' and not manager.muted[chat_id]:
+        manager.muted[chat_id] = True
+        bot.post(text='muted')
+
+    elif cmd == 'unmute':
+        manager.muted[chat_id] = False
+        bot.post(text='unmuted')
     #with arguments
     elif not args:
         return '200'
@@ -93,12 +101,15 @@ def webhook():
         if manager.is_owner(sender_id, chat_id):
             if args == 'admin':
                 manager.privileged[chat_id] = True
-                bot.post(text='succesfully privileged channel')
+                if not manager.muted[chat_id]:
+                    bot.post(text='succesfully privileged channel')
             elif args == 'all':
-                bot.post(text='succesfully deprivileged channel')
+                if not manager.muted[chat_id]:
+                    bot.post(text='succesfully deprivileged channel')
                 manager.privileged[chat_id] = False
         else:
-            bot.post(text='you are not the admin')    
+            if not manager.muted[chat_id]:
+                bot.post(text='you are not the admin')    
     
 
     elif cmd == 'join':
