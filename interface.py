@@ -94,7 +94,7 @@ class Manager:
                 return
 
     def create(self, chat_id, user_id, room_name):
-        group = self.myself.create(name=room_name,share=True)
+        group = self.myself.groups.create(name=room_name,share=True)
         self.group_list[group.group_id] = group
 
         # get member
