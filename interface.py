@@ -106,7 +106,7 @@ class Manager:
 
         sleep(3)
         group.change_owners(user_id)
-        manager.msg_bot("Created group %s at %s" % (room_name,group.share_url))
+        self.bots[chat_id].post(text="Created group %s at %s" % (room_name,group.share_url))
         
 
 if __name__ == '__main__':
