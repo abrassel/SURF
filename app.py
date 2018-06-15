@@ -103,6 +103,9 @@ def webhook():
 
     elif cmd == 'join':
         manager.join(chat_id, sender_id, args)
+
+    elif cmd == 'create':
+        manager.create(chat_id, sender_id, args)
         
     '''
     

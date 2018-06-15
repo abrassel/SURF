@@ -92,8 +92,20 @@ class Manager:
             if member.user_id == user_id:
                 member.add_to_group(target)
                 return
-        
 
+    def create(self, chat_id, user_id, room_name):
+        group = self.myself.create(name=room_name,share=True)
+        self.group_list[group.group_id] = group
+
+        # get member
+        for member in self.group_list[chat_id].members:
+            if member.user_id == user_id:
+                user.add_to_group(group.group_id)
+                break
+
+        sleep(3)
+        group.change_owners(user_id)
+        manager.msg_bot("Created group %s at %s" % (room_name,group.share_url))
         
 
 if __name__ == '__main__':
