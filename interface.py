@@ -42,7 +42,7 @@ class Manager:
             
     def gen_groups(self):
         group_queue = [self.nist]
-        self.group_list = {}
+        self.group_list = {self.nist.group_id:self.nist}
         while group_queue:
             try:
                 cur = group_queue.pop()
