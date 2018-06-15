@@ -80,7 +80,7 @@ class Manager:
     def is_owner(self, user_id, room):
         return room in self.owners and user_id == self.owners[room].user_id
 
-    def join_group(self, chat_id, user_id, room_name):
+    def join(self, chat_id, user_id, room_name):
 
         # get group to add to
         for group in self.group_list.values():
