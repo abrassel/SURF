@@ -59,9 +59,9 @@ class Manager:
                             except:
                                 print('an exception has been caught')
                                 continue
-                            if joined and joined.id not in self.group_list:
+                            if joined and joined.group_id not in self.group_list:
                                 group_queue.append(joined)
-                                self.group_list[joined.id] = joined
+                                self.group_list[joined.group_id] = joined
             except Exception:
                 continue
         
