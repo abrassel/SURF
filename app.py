@@ -26,8 +26,8 @@ def parse(token):
     return cmd.strip().lower(), args
 
 
-@app.route('/', methods=['GET','POST'])
-def webhook():
+@app.route('/<var>', methods=['GET','POST'])
+def webhook(var):
     print('started method')
     if not request.json:
         print('something fucked up')
