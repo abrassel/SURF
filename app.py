@@ -33,7 +33,6 @@ def webhook():
         print('avoid echoing')
         return '200'
 
-    chat_id = request.args.get('chat',default=None,type=str)
     chat_id = request.json['group_id']
     if not chat_id:
         print('no chat id')
@@ -71,7 +70,7 @@ def webhook():
     - unhook: remove bot from channel
     - privilege <channel name> <admin/all>: if admin, restrict bot usage to admin/all
     '''
-
+    print(manager.privileged[chat_id])
     if manager.privileged[chat_id] and not manager.is_owner(sender_id, chat_id):
         print('failed privilege check')
         return '200'
