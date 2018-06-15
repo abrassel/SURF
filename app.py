@@ -8,6 +8,10 @@ from time import sleep
 app = Flask(__name__)
 manager = interface.Manager(TOKEN)
 
+def post(bot, msg):
+    if not manager.muted[bot.group_id]:
+        bot.post(text=msg)
+
 def parse(token):
     if token[0] != '!':
         return (None, None)
@@ -78,22 +82,22 @@ def webhook():
         return '200'
 
     elif cmd == 'help':
-        if not manager.muted[chat_id]:
-            bot.post(text=help_str)
+        post(bot,help_str)
         
     elif cmd == 'groups':
-        if not manager.muted[chat_id]:
-            bot.post(text='\n'.join(
-                [group.name for group in manager.group_list.values()]
-            ))
+        post(bot,'\n'.join(
+            [group.name for group in manager.group_list.values()]
+        ))
 
     elif cmd == 'mute' and not manager.muted[chat_id]:
         manager.muted[chat_id] = True
-        bot.post(text='muted')
+        print('muted: ')
+        print(manager.muted)
+        post(bot,text='muted')
 
     elif cmd == 'unmute':
         manager.muted[chat_id] = False
-        bot.post(text='unmuted')
+        post(bot,text='unmuted')
     #with arguments
     elif not args:
         return '200'
@@ -102,15 +106,12 @@ def webhook():
         if manager.is_owner(sender_id, chat_id):
             if args == 'admin':
                 manager.privileged[chat_id] = True
-                if not manager.muted[chat_id]:
-                    bot.post(text='succesfully privileged channel')
+                post(bot,text='succesfully privileged channel')
             elif args == 'all':
-                if not manager.muted[chat_id]:
-                    bot.post(text='succesfully deprivileged channel')
+                post(bot,text='succesfully deprivileged channel')
                 manager.privileged[chat_id] = False
         else:
-            if not manager.muted[chat_id]:
-                bot.post(text='you are not the admin')    
+            post(bot,text='you are not the admin')    
     
 
     elif cmd == 'join':
