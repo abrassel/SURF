@@ -100,7 +100,7 @@ class Manager:
         # get member
         for member in self.group_list[chat_id].members:
             if member.user_id == user_id:
-                user.add_to_group(group.group_id)
+                member.add_to_group(group.group_id)
                 break
 
         sleep(3)
