@@ -140,7 +140,7 @@ class Manager:
             if group.name == room_name:
                 room_id = group.group_id
         bot = self.myself.bots.create(name="SURF",group_id=room_id,callback_url="https://surf-bot-1998.herokuapp.com")
-        self.update(bots=[bot])
+        self.update(new_bots=[bot])
         
 
 if __name__ == '__main__':
