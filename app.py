@@ -99,7 +99,6 @@ def webhook():
         post(bot,'unmuted')
 
     elif cmd == 'unhook':
-        post(bot, 'deleted bot')
         bot.destroy()
         
 
@@ -124,7 +123,10 @@ def webhook():
         manager.join(chat_id, sender_id, args)
 
     elif cmd == 'create':
-        manager.create(chat_id, sender_id, args)
+        manager.create_group(chat_id, sender_id, args)
+
+    elif cmd == 'hook':
+        manager.create_bot(args)
         
     '''
     

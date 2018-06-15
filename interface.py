@@ -1,4 +1,5 @@
 from groupy.client import Client, attachments
+from groupy.api.bots import Bots
 import re
 import os
 from collections import defaultdict
@@ -119,7 +120,7 @@ class Manager:
                 member.add_to_group(target)
                 return
 
-    def create(self, chat_id, user_id, room_name):
+    def create_group(self, chat_id, user_id, room_name):
         group = self.myself.groups.create(name=room_name,share=True)
 
         # get member
@@ -133,6 +134,13 @@ class Manager:
         if not self.muted[chat_id]:
             self.bots[chat_id].post(text="Created group %s at %s" % (room_name,group.share_url))
         self.update(groups=[group])
+
+    def create_bot(self, room_name):
+        for group in self.group_list.values():
+            if group.name == room_name:
+                room_id = group.group_id
+        bot = self.myself.bots.create(name="SURF",group_id=room_id,callback_url="https://surf-bot-1998.herokuapp.com")
+        self.update(bots=[bot])
         
 
 if __name__ == '__main__':
