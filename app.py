@@ -75,7 +75,7 @@ def webhook():
     - privilege <channel name> <admin/all>: if admin, restrict bot usage to admin/all
     '''
 
-
+    # without arguments
 
     if manager.privileged[chat_id] and not manager.is_owner(sender_id, chat_id):
         print('failed privilege check')
@@ -90,14 +90,20 @@ def webhook():
         ))
 
     elif cmd == 'mute' and not manager.muted[chat_id]:
-        manager.muted[chat_id] = True
-        print('muted: ')
-        print(manager.muted)
         post(bot,'muted')
+        manager.muted[chat_id] = True
+
 
     elif cmd == 'unmute':
-        del manager.muted[chat_id]
+        manager.muted[chat_id] = False
         post(bot,'unmuted')
+
+    elif cmd == 'unhook':
+        post(bot, 'deleted bot')
+        bot.destroy()
+        
+
+        
     #with arguments
     elif not args:
         return '200'
