@@ -71,16 +71,13 @@ def webhook():
     - privilege <channel name> <admin/all>: if admin, restrict bot usage to admin/all
     '''
 
-    print(manager.is_owner(sender_id, chat_id))
+
 
     if manager.privileged[chat_id] and not manager.is_owner(sender_id, chat_id):
         print('failed privilege check')
         return '200'
 
-    if cmd == 'help':
-        #manager.send_pm(sender_id, help_str)
-        print('tried to post a message')
-        print(bot)
+    elif cmd == 'help':
         bot.post(text=help_str)
         
     elif cmd == 'groups':
@@ -88,7 +85,7 @@ def webhook():
             [group.name for group in manager.group_list.values()]
         ))
 
-    '''with arguments'''
+    #with arguments
     elif not args:
         return '200'
 
@@ -105,7 +102,7 @@ def webhook():
     
 
     elif cmd == 'join':
-        manager.join(sender_id, args)
+        manager.join(chat_id, sender_id, args)
         
     '''
     
