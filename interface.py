@@ -2,6 +2,7 @@ from groupy.client import Client, attachments
 import re
 import os
 from collections import defaultdict
+from time import sleep
 
 HOME="Bot Testing Channel"
 #HOME = '41065684'
