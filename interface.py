@@ -78,6 +78,9 @@ class Manager:
                 return
 
     def is_owner(self, user, room):
+        print(self.owners)
+        print(user)
+        print(room)
         return room in self.owners and user.user_id == self.owners[room].user_id
 
         
