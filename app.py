@@ -92,11 +92,11 @@ def webhook():
             return '200'
         if manager.is_owner(sender_id, chat_id):
             if args == 'admin':
-                self.privileged[chat_id] == True
+                manager.privileged[chat_id] = True
                 bot.post(text='succesfully privileged channel')
             elif args == 'all':
                 bot.post(text='succesfully deprivileged channel')
-                self.privileged[chat_id] == False
+                manager.privileged[chat_id] = False
         else:
             bot.post(text='you are not the admin')    
     
