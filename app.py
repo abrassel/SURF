@@ -96,7 +96,7 @@ def webhook():
         post(bot,'muted')
 
     elif cmd == 'unmute':
-        manager.muted[chat_id] = False
+        del manager.muted[chat_id]
         post(bot,'unmuted')
     #with arguments
     elif not args:
