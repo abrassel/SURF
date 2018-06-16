@@ -27,7 +27,7 @@ def parse(token):
 
 
 @app.route('/', methods=['GET','POST'])
-def webhook(var):
+def webhook():
     print('started method')
     if not request.json:
         print('something fucked up')
