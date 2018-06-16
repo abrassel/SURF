@@ -4,6 +4,8 @@ import re
 import os
 from collections import defaultdict
 from time import sleep
+import json
+import requests
 
 HOME="Bot Testing Channel"
 #HOME = '41065684'
@@ -139,8 +141,15 @@ class Manager:
         for group in self.group_list.values():
             if group.name == room_name:
                 room_id = group.group_id
-        bot = self.myself.bots.create(name="SURF",group_id=room_id,callback_url="https://surf-bot-1998.herokuapp.com/")
-        self.update(new_bots=[bot])
+
+
+        # their library is broken ... have to go through API myself
+        url = "https://api.groupme.com/v3/bots"
+        params = {'token':TOKEN}
+        body = {'bot':{'name':'SURF', 'group_id': room_id, 'callback_url': 'https://surf-bot-1998.herokuapp.com'}}
+        headers = {'Content-Type': 'application/json'}
+        requests.post(url, params=params, headers=headers, data=json.dumps(body,indent=2))
+        self.update(new_bots=self.myself.bots.list())
         
 
 if __name__ == '__main__':
