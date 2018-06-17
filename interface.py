@@ -137,13 +137,6 @@ class Manager:
             self.bots[chat_id].post(text="Created group %s at %s" % (room_name,group.share_url))
         self.update(groups=[group])
 
-    def destroy(self, bot_id):
-        url = "https://api.groupme.com/v3/bots/destroy"
-        body = json.dumps({"bot_id": bot_id})
-        params = {'token': token}
-        header = {'Content-Type': 'application/json'}
-        requests.post(url, headers=header, params=params,data=body)
-        self.update(new_bots=self.myself.bots.list())
     
     def create_bot(self, room_name):
         for group in self.group_list.values():
