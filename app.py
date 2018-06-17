@@ -58,11 +58,13 @@ def webhook():
     help_str = '''
     valid commands
     -------------------------
+
+    USER
+    -------------------------
     - groups: list all groups
     - join <group>: join group
     - create <new_group>: create a new group
-    - mute/unmute: admin can mute or unmute bot in a group
-    - add_meme <meme> <tag>: post an image macro in response to a text key phrase (vote majority)
+    - add_meme <text> <img attachment>: associate attached image with text
     - subscribe <usr>: subscribe a user to daily cat facts
     - report <usr>: report a user for malicious bot usage
     - unsubscribe: unsubscribe yourself from cat facts (25% chance of success)
@@ -70,9 +72,14 @@ def webhook():
     - opt-in: opt-in to announcements
     - opt-out: opt-out of announcements
     - announce: send group-wide announcement to all opted-in members
+    
+
+    ADMIN
+    -------------------------
+    - mute/unmute: mute or unmute bot in a group
     - hook <channel name>: add bot to channel 
     - unhook: remove bot from channel
-    - privilege <channel name> <admin/all>: if admin, restrict bot usage to admin/all
+    - privilege <channel name> <admin/all>: restrict bot usage to admin/all
     '''
 
     # without arguments
@@ -99,7 +106,10 @@ def webhook():
         post(bot,'unmuted')
 
     elif cmd == 'unhook':
-        bot.destroy()
+        try:
+            manager.destroy(bot)
+        except Exception:
+            post(bot, 'Tried to unhook too quickly after creation')
         
 
         
