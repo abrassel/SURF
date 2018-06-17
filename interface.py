@@ -157,8 +157,9 @@ class Manager:
         body = {'bot':{'name':'SURF', 'group_id': room_id, 'callback_url': 'https://surf-bot-1998.herokuapp.com'}}
         headers = {'Content-Type': 'application/json'}
         requests.post(url, params=params, headers=headers, data=json.dumps(body,indent=2))
+        print(self.bots)
         self.update(new_bots=self.myself.bots.list())
-        
+        print(self.bots)
 
 if __name__ == '__main__':
     m = Manager(TOKEN)
