@@ -77,7 +77,8 @@ class Manager:
                     if "owner" in member.roles:
                         self.owners[group.group_id] = member
                         break
-                print('group list: ' + repr(self.group_list))
+
+             self.bots = dict([(bot.group_id,bot) for bot in self.myself.bots.list()])
 
         if new_bots:
             for bot in new_bots:
@@ -91,6 +92,8 @@ class Manager:
             for room in self.group_list.values():
                 self.gen_owner(room)
 
+        elif flag:
+            
             
             
             
