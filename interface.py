@@ -138,13 +138,13 @@ class Manager:
     def create_bot(self, room_name):
         room_id = None
 
-        while not room_id:
-            for group in self.group_list.values():
-                if group.name == room_name:
-                    room_id = group.group_id
+        for group in self.group_list.values():
+            if group.name == room_name:
+                room_id = group.group_id
 
-            if not room_id:
-                self.update()
+        if not room_id:
+            sleep(3)
+            return create_bot(self, room_name)
 
         # their library is broken ... have to go through API myself
         url = "https://api.groupme.com/v3/bots"
