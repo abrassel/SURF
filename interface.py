@@ -25,7 +25,6 @@ class Manager:
         self.myself = Client.from_token(uid)
         self.nist = self.retrieve_nist(HOME)
         self.gen_groups()
-        self.gen_usrs()
         self.bots = dict([(bot.group_id,bot) for bot in self.myself.bots.list()])
         # gen owners
         self.owners = {}
@@ -85,7 +84,6 @@ class Manager:
 
         elif not groups and not new_bots:
             self.gen_groups()
-            self.gen_usrs()
             self.bots = dict([(bot.group_id,bot) for bot in self.myself.bots.list()])
             # gen owners
             self.owners = {}
@@ -95,10 +93,6 @@ class Manager:
             
             
             
-    def gen_usrs(self):
-        self.usr_list = {}
-        for usr in self.nist.members:
-            self.usr_list[usr.user_id] = usr
 
     def gen_owner(self, room):
         for member in room.members:

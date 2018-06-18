@@ -140,10 +140,9 @@ def webhook():
         manager.create_bot(args)
 
     elif cmd == 'add':
-        room = manager.group_list[chat_id]
         name = args.lower()
         matches = []
-        for usr in room.members:
+        for usr in manager.nist.members:
             if name in usr.nickname.lower():
                 matches.append(usr)
 
