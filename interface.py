@@ -72,12 +72,12 @@ class Manager:
     def update(self, groups=None, new_bots=None):
         if groups:
             for group in groups:
-                print('updating groups')
                 self.group_list[group.group_id] = group
                 for member in group.members:
                     if "owner" in member.roles:
                         self.owners[group.group_id] = member
                         break
+                print('group list: ' + self.group_list)
 
         if new_bots:
             for bot in new_bots:

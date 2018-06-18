@@ -96,6 +96,7 @@ def webhook():
         post(bot,'\n'.join(
             [group.name for group in manager.group_list.values()]
         ))
+        print(manager.group_list)
 
     elif cmd == 'mute' and not manager.muted[chat_id]:
         post(bot,'muted')
