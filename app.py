@@ -117,8 +117,6 @@ def webhook():
                 usr.post("Unsuccessfully tried to unsubscribe.  Your RNG was not high enough.")
             else:
                 usr.post("Did not successfully unsubscribe from cat facts.")
-        else:
-            usr.post("You are not subscribed to cat facts.")
         
     elif cmd == 'groups':
         post(bot,'\n'.join(
