@@ -110,7 +110,10 @@ def webhook():
 
     elif cmd == 'unhook':
         try:
-            manager.destroy(bot)
+            result = bot.destroy()
+            if not result:
+                post(bot, 'unsuccessful')
+            del manager.bots[bot.group_id]
         except Exception:
             post(bot, 'Tried to unhook too quickly after creation')
 
