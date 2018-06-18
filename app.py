@@ -4,7 +4,6 @@ from interface import TOKEN, BOT_NAME
 import json as j
 from time import sleep
 
-
 app = Flask(__name__)
 manager = interface.Manager(TOKEN)
 
@@ -49,6 +48,8 @@ def webhook():
         bot = manager.bots[chat_id]
     except KeyError:
         print('key error, channel not found')
+        print(chat_id)
+        print(repr(manager.bots))
         return '200'
     
 
