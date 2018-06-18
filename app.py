@@ -143,7 +143,7 @@ def webhook():
         return '200'
 
     elif cmd == 'subscribe':
-        for person in manager.group_list[chat_id]:
+        for person in manager.group_list[chat_id].members:
             if person.nickname == args:
                 usr = person
                 break

@@ -44,6 +44,7 @@ class Manager:
 
     def launch_cat_facts(self):
         Timer(cat_facts, self.launch_cat_facts).start()
+        print('sending cat facts')
         self.send_cat_facts()
 
     def launch_auto_update(self):
