@@ -77,7 +77,7 @@ class Manager:
                     if "owner" in member.roles:
                         self.owners[group.group_id] = member
                         break
-                print('group list: ' + self.group_list)
+                print('group list: ' + repr(self.group_list))
 
         if new_bots:
             for bot in new_bots:
