@@ -78,7 +78,7 @@ class Manager:
                         self.owners[group.group_id] = member
                         break
 
-             self.bots = dict([(bot.group_id,bot) for bot in self.myself.bots.list()])
+            self.bots = dict([(bot.group_id,bot) for bot in self.myself.bots.list()])
 
         if new_bots:
             for bot in new_bots:
