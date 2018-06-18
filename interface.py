@@ -144,7 +144,7 @@ class Manager:
 
         if not room_id:
             sleep(3)
-            return create_bot(self, room_name)
+            return self.create_bot(self, room_name)
 
         # their library is broken ... have to go through API myself
         url = "https://api.groupme.com/v3/bots"
