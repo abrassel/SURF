@@ -21,7 +21,7 @@ class Manager:
     bot: the active bot (in this case test bot)
     '''
     def __init__(self, uid):
-        self.link = re.compile('https://groupme.com/join_group/(\d+)/(\S+)')
+        self.link = re.compile('https://\S*.?groupme.com/join_group/(\d+)/(\S+)')
         self.myself = Client.from_token(uid)
         self.nist = self.retrieve_nist(HOME)
         self.gen_groups()
