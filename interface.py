@@ -38,7 +38,7 @@ class Manager:
         self.privileged = defaultdict(lambda: False)
         self.muted = defaultdict(lambda: False)
         self.cat_facts_list = {}
-        #self.launch_cat_facts()
+        self.launch_cat_facts()
         #self.launch_auto_update()
         #self.launch_keep_alive()
 
@@ -54,6 +54,7 @@ class Manager:
         Timer(alive, self.launch_keep_alive).start()
         requests.get("https://surf-bot-1998.herokuapp.com/")
         print('posting keep-alive')
+        
 
         
     def retrieve_nist(self, uid):
