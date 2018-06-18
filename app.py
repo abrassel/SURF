@@ -76,6 +76,7 @@ def webhook():
 
     ADMIN
     -------------------------
+    - add <usr>: Add user to current group
     - mute/unmute: mute or unmute bot in a group
     - hook <channel name>: add bot to channel 
     - unhook: remove bot from channel
@@ -137,7 +138,21 @@ def webhook():
 
     elif cmd == 'hook':
         manager.create_bot(args)
-        
+
+    elif cmd == 'add':
+        room = manager.group_list[chat_id]
+        name = args.lower()
+        matches = []
+        for usr in room.members:
+            if name in usr.nickname.lower():
+                matches.append(usr)
+
+        if len(matches) == 1:
+            usr.add_to_group(chat_id)
+        elif len(matches) == 0:
+            post(bot, "no matches for user \"%s\"" % (args,))
+        else:
+            post(bot, "Matches:\n------------\n" + "\n".join([usr.nickname for usr in matches]))
     '''
     
     if "groups" in request.json['text']:
