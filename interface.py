@@ -65,7 +65,7 @@ class Manager:
 
             
     def gen_groups(self):
-        group_queue = [self.nist]ds
+        group_queue = [self.nist]
         self.group_list = {self.nist.group_id:self.nist}
         while group_queue:
             try:
