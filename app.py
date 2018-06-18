@@ -147,7 +147,7 @@ def webhook():
                 matches.append(usr)
 
         if len(matches) == 1:
-            usr.add_to_group(chat_id)
+            matches[0].add_to_group(chat_id)
         elif len(matches) == 0:
             post(bot, "no matches for user \"%s\"" % (args,))
         else:
