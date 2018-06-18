@@ -105,9 +105,6 @@ def webhook():
         post(bot,help_str)
 
     elif cmd == 'unsubscribe':
-        print(member.cat_facts_list)
-        print(member.cat_facts_list[0].user_id)
-        print(sender_id)
         user = None
         for user in manager.cat_facts_list:
             if user.user_id == sender_id:
