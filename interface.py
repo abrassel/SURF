@@ -68,7 +68,7 @@ class Manager:
                                 self.group_list[joined.group_id] = joined
             except Exception:
                 continue
-        
+            
     def update(self, groups=None, new_bots=None):
         if groups:
             for group in groups:
@@ -133,7 +133,7 @@ class Manager:
         group.change_owners(user_id)
         if not self.muted[chat_id]:
             self.bots[chat_id].post(text="Created group %s at %s" % (room_name,group.share_url))
-        self.update(groups=[group])
+            self.update(groups=[group])
 
     
     def create_bot(self, room_name):
