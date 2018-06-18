@@ -105,12 +105,14 @@ def webhook():
         post(bot,help_str)
 
     elif cmd == 'unsubscribe':
+        usr = None
         for person in manager.group_list[chat_id].members:
-            if person.nickname == args:
+            if person.user_id == sender_id:
                 usr = person
                 break
-        
-        if usr in manager.cat_facts_list:
+
+                    
+        if usr and usr in manager.cat_facts_list:
             roll = random()
             if roll > .75:
                 manager.cat_facts_list.remove(usr)
