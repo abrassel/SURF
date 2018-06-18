@@ -53,7 +53,7 @@ class Manager:
 
     def launch_keep_alive(self):
         Timer(alive, self.launch_keep_alive).start()
-        requests.get("https://surf-bot-1998.herokuapp.com/")
+        
         print('posting keep-alive')
         
 
