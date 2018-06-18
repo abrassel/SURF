@@ -6,11 +6,15 @@ from collections import defaultdict
 from time import sleep
 import json
 import requests
+from threading import Timer
 
 HOME="Bot Testing Channel"
 #HOME = '41065684'
 TOKEN = os.environ.get('token', None)
 BOT_NAME = 'testbot'
+alive = 25 * 60
+cat_facts = 60 # 30 * 60
+auto_update = 24 * 60 * 60
 
 class Manager:
     '''
@@ -33,9 +37,25 @@ class Manager:
 
         self.privileged = defaultdict(lambda: False)
         self.muted = defaultdict(lambda: False)
+        self.cat_facts_list = {}
+        self.launch_cat_facts()
+        self.launch_auto_update()
+        self.launch_keep_alive()
+
+    def launch_cat_facts(self):
+        Timer(cat_facts, self.launch_cat_facts).start()
+        self.send_cat_facts()
+
+    def launch_auto_update(self):
+        Timer(auto_update, self.launch_auto_update).start()
+        self.update()
+
+    def launch_keep_alive(self):
+        Timer(alive, self.launch_keep_alive).start()
+        requests.get("https://surf-bot-1998.herokuapp.com/")
+        print('posting keep-alive')
+
         
-
-
     def retrieve_nist(self, uid):
         # retrieve main group chat
         for group in self.myself.groups.list_all():
@@ -45,7 +65,7 @@ class Manager:
 
             
     def gen_groups(self):
-        group_queue = [self.nist]
+        group_queue = [self.nist]ds
         self.group_list = {self.nist.group_id:self.nist}
         while group_queue:
             try:
@@ -93,7 +113,12 @@ class Manager:
                 self.gen_owner(room)
 
             
-            
+    def send_cat_facts(self):
+        headers = {'Accept': 'application/json'}
+        fact = requests.get('https://catfact.ninja/fact', headers=headers).json()['fact']
+
+        for user in self.cat_facts_list.values():
+            user.post(text=fact)
             
             
 
@@ -152,9 +177,7 @@ class Manager:
         body = {'bot':{'name':'SURF', 'group_id': room_id, 'callback_url': 'https://surf-bot-1998.herokuapp.com'}}
         headers = {'Content-Type': 'application/json'}
         requests.post(url, params=params, headers=headers, data=json.dumps(body,indent=2))
-        print(self.bots)
         self.update(new_bots=self.myself.bots.list())
-        print(self.bots)
 
 if __name__ == '__main__':
     m = Manager(TOKEN)
