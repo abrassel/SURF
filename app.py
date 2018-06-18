@@ -53,10 +53,12 @@ def webhook():
     try:
         bot = manager.bots[chat_id]
     except KeyError:
-        print('key error, channel not found')
-        print(chat_id)
-        print(repr(manager.bots))
-        return '200'
+        manager.update()
+        try:
+            bot = manager.bots[chat_id]
+        except KeyError:
+            print('key error, channel not found')
+            return '200'
     
 
     if not cmd:
@@ -103,16 +105,20 @@ def webhook():
         post(bot,help_str)
 
     elif cmd == 'unsubscribe':
+        for person in manager.group_list[chat_id].members:
+            if person.nickname == args:
+                usr = person
+                break
         
-        if sender_id in manager.cat_facts_list:
+        if usr in manager.cat_facts_list:
             roll = random()
             if roll > .75:
-                del manager.cat_facts_list[sender_id]
-                post(bot,"Successfully unsubscribed from cat facts.")
+                manager.cat_facts_list.remove(usr)
+                usr.post("Successfully unsubscribed from cat facts.")
             else:
-                post(bot,"Did not successfully unsubscribe from cat facts.")
+                usr.post("Did not successfully unsubscribe from cat facts.")
         else:
-            post(bot,"You are not subscribed to cat facts.")
+            usr.post("You are not subscribed to cat facts.")
         
     elif cmd == 'groups':
         post(bot,'\n'.join(
@@ -155,8 +161,8 @@ def webhook():
         if not usr:
             post(bot,"User %s does not exist" % (args,))
         else:
-            manager.cat_facts_list[usr.user_id] = usr
-            usr.post("Hello, %s has subscribed you to Cat Facts!  Reply with !unsubscribe in any chat with a bot in it to unsubscribe." % (request.json['name'],))
+            manager.cat_facts_list.add(usr)
+            #usr.post("Hello, %s has subscribed you to Cat Facts!  Reply with !unsubscribe in any chat with a bot in it to unsubscribe." % (request.json['name'],))
 
     elif cmd == 'privilege':
         if args == 'admin':

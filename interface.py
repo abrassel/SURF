@@ -8,8 +8,8 @@ import json
 import requests
 from threading import Timer
 
-HOME="Bot Testing Channel"
-#HOME = '41065684'
+#HOME="Bot Testing Channel"
+HOME = '41065684'
 TOKEN = os.environ.get('token', None)
 BOT_NAME = 'testbot'
 alive = 15 # 25 * 60
@@ -37,10 +37,12 @@ class Manager:
 
         self.privileged = defaultdict(lambda: False)
         self.muted = defaultdict(lambda: False)
-        self.cat_facts_list = {}
+        self.opted_in = {}
+        self.cat_facts_list = set()
         self.launch_cat_facts()
         #self.launch_auto_update()
         self.launch_keep_alive()
+        
 
     def launch_cat_facts(self):
         Timer(cat_facts, self.launch_cat_facts).start()
@@ -57,6 +59,20 @@ class Manager:
         print('posting keep-alive')
         
 
+    def announce(self, room_id):
+        room = self.group_list[room_id]
+
+        
+        
+        opted_out = self.opt_list[room_id]
+        opted_in = set(room.members) - opted_out
+
+        loci = []
+        tags = []
+        for person in opted_in:
+            loci.append([0,1])
+            tags.append(person.user_id)
+            
         
     def retrieve_nist(self, uid):
         # retrieve main group chat
