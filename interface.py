@@ -92,7 +92,6 @@ class Manager:
             for room in self.group_list.values():
                 self.gen_owner(room)
 
-        elif flag:
             
             
             

@@ -132,7 +132,7 @@ def webhook():
                 manager.privileged[chat_id] = False
         else:
             post(bot,'you are not the admin')    
-    
+            
 
     elif cmd == 'join':
         manager.join(chat_id, sender_id, args)
@@ -156,7 +156,7 @@ def webhook():
             post(bot, "no matches for user \"%s\"" % (args,))
         else:
             post(bot, "Matches:\n------------\n" + "\n".join([usr.nickname for usr in matches]))
-    '''
+            '''
     
     if "groups" in request.json['text']:
         groups = ""
