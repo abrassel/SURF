@@ -75,7 +75,7 @@ class Manager:
                 self.group_list[group.group_id] = group
                 for member in group.members:
                     if "owner" in member.roles:
-                        owners[group.group_id] = member
+                        self.owners[group.group_id] = member
                         break
 
         if new_bots:
