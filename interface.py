@@ -38,9 +38,9 @@ class Manager:
         self.privileged = defaultdict(lambda: False)
         self.muted = defaultdict(lambda: False)
         self.cat_facts_list = {}
-        self.launch_cat_facts()
-        self.launch_auto_update()
-        self.launch_keep_alive()
+        #self.launch_cat_facts()
+        #self.launch_auto_update()
+        #self.launch_keep_alive()
 
     def launch_cat_facts(self):
         Timer(cat_facts, self.launch_cat_facts).start()
