@@ -8,8 +8,8 @@ import json
 import requests
 from threading import Timer
 
-#HOME="Bot Testing Channel"
-HOME = '41065684'
+HOME="Bot Testing Channel"
+#HOME = '41065684'
 TOKEN = os.environ.get('token', None)
 BOT_NAME = 'testbot'
 alive = 15 # 25 * 60
