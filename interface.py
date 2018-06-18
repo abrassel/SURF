@@ -13,7 +13,7 @@ HOME="Bot Testing Channel"
 TOKEN = os.environ.get('token', None)
 BOT_NAME = 'testbot'
 alive = 15 # 25 * 60
-cat_facts = 30 * 60
+cat_facts = 30
 auto_update = 24 * 60 * 60
 
 class Manager:

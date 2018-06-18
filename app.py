@@ -26,8 +26,12 @@ def parse(token):
 
     return cmd.strip().lower(), args
 
+@app.route('/', methods=['GET'])
+def keep_alive():
+    return "Hello World"
 
-@app.route('/', methods=['GET','POST'])
+
+@app.route('/', methods=['POST'])
 def webhook():
     print('started method')
     if not request.json:
