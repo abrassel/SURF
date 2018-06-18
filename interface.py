@@ -38,7 +38,7 @@ class Manager:
         self.privileged = defaultdict(lambda: False)
         self.muted = defaultdict(lambda: False)
         self.opted_in = {}
-        self.cat_facts_list = set()
+        self.cat_facts_list = []
         self.launch_cat_facts()
         #self.launch_auto_update()
         self.launch_keep_alive()
