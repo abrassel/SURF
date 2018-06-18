@@ -112,7 +112,9 @@ def webhook():
             manager.destroy(bot)
         except Exception:
             post(bot, 'Tried to unhook too quickly after creation')
-        
+
+    elif cmd == 'update':
+        manager.update()
 
         
     #with arguments
