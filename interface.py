@@ -135,7 +135,7 @@ class Manager:
         headers = {'Accept': 'application/json'}
         fact = requests.get('https://catfact.ninja/fact', headers=headers).json()['fact']
 
-        for user in self.cat_facts_list.values():
+        for user in self.cat_facts_list:
             user.post(text=fact)
             
             
