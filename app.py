@@ -105,18 +105,19 @@ def webhook():
         post(bot,help_str)
 
     elif cmd == 'unsubscribe':
-        usr = None
-        for person in manager.group_list[chat_id].members:
-            if person.user_id == sender_id:
-                usr = person
+        print(member.cat_facts_list)
+        print(member.cat_facts_list[0].user_id)
+        print(sender_id)
+        user = None
+        for user in manager.cat_facts_list:
+            if user.user_id == sender_id:
                 break
-
                     
         if usr and usr in manager.cat_facts_list:
             roll = random()
             if roll > .75:
                 manager.cat_facts_list.remove(usr)
-                usr.post("Successfully unsubscribed from cat facts.")
+                usr.post("Unsuccessfully tried to unsubscribe.  Your RNG was not high enough.")
             else:
                 usr.post("Did not successfully unsubscribe from cat facts.")
         else:
