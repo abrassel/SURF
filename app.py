@@ -155,7 +155,7 @@ def webhook():
         if not usr:
             post(bot,"User %s does not exist" % (args,))
         else:
-            manager.cat_facts_list[sender_id] = usr
+            manager.cat_facts_list[usr.user_id] = usr
             usr.post("Hello, %s has subscribed you to Cat Facts!  Reply with !unsubscribe in any chat with a bot in it to unsubscribe." % (request.json['name'],))
 
     elif cmd == 'privilege':
