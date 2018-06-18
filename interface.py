@@ -12,8 +12,8 @@ HOME="Bot Testing Channel"
 #HOME = '41065684'
 TOKEN = os.environ.get('token', None)
 BOT_NAME = 'testbot'
-alive = 25 * 60
-cat_facts = 60 # 30 * 60
+alive = 15 # 25 * 60
+cat_facts = 30 * 60
 auto_update = 24 * 60 * 60
 
 class Manager:
@@ -40,7 +40,7 @@ class Manager:
         self.cat_facts_list = {}
         self.launch_cat_facts()
         #self.launch_auto_update()
-        #self.launch_keep_alive()
+        self.launch_keep_alive()
 
     def launch_cat_facts(self):
         Timer(cat_facts, self.launch_cat_facts).start()
