@@ -82,7 +82,6 @@ def webhook():
     print(request.get_json())
 
     try:
-        test = request.json['group']
         user_id = request.json['user_id']
         text = request.json['text']
     except KeyError:
