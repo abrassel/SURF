@@ -18,6 +18,6 @@ class API:
 
     def __post__(self,extension,data):
         r = requests.post(self._base + extension, headers=self._headers,
-                             params=self._params, data=data).json()
+                             params=self._params, data=data)
         print(r.__dict__)
         return r
