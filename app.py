@@ -81,14 +81,19 @@ def webhook():
 
     print(request.get_json())
 
-    test = request.json['group']
-
+    try:
+        test = request.json['group']
+        user_id = request.json['user_id']
+        text = request.json['text']
+    except KeyError:
+        print('key error')
+        return '400'
+        
     if len(request.json['group_id'] < 10):
         print('this is a group message')
         return '200'
 
-    user_id = request.json['user_id']
-    text = request.json['text']
+
     # non args commands
 
     cmd, args = parse(text)
