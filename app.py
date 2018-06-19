@@ -1,14 +1,14 @@
 from flask import Flask, request
 import os
 
-valid_commands = set(
+valid_commands = set([
     'help', 'groups', 'join', 'create',
     'add', 'subscribe', 'unsubscribe', 'report', 'ban'
-    )
-has_args = set(
+    ])
+has_args = set([
     'join', 'create', 'add', 'subscribe',
     'report', 'ban'
-    )
+    ])
 
 app = Flask(__name__)
 api = API(os.environ.get('token'))
