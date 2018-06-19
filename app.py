@@ -88,7 +88,7 @@ def webhook():
         print('key error')
         return '400'
         
-    if len(request.json['group_id'] < 10):
+    if len(request.json['group_id']) < 10:
         print('this is a group message')
         return '200'
 
