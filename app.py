@@ -111,12 +111,14 @@ def webhook():
                 break
                     
         if usr and usr in manager.cat_facts_list:
+            usr.post("Tried to unsubscribe")
             roll = random()
+            usr.post("RNG: %d" %(roll,))
             if roll > .75:
                 manager.cat_facts_list.remove(usr)
-                usr.post("Unsuccessfully tried to unsubscribe.  Your RNG was not high enough.")
+                usr.post("Successfully unsubscribed.")
             else:
-                usr.post("Did not successfully unsubscribe from cat facts.")
+                usr.post("Did not successfully unsubscribe from cat facts.  Your RNG was not high enough")
         
     elif cmd == 'groups':
         post(bot,'\n'.join(
