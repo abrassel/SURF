@@ -113,7 +113,7 @@ def webhook():
         if usr and usr in manager.cat_facts_list:
             usr.post("Tried to unsubscribe")
             roll = random()
-            usr.post("RNG: %d" %(roll,))
+            usr.post("RNG: %f" %(roll,))
             if roll > .75:
                 manager.cat_facts_list.remove(usr)
                 usr.post("Successfully unsubscribed.")
