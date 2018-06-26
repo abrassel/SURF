@@ -12,7 +12,7 @@ headers = {
 
 
 class API:
-    def __init__(self):
+    def __init__(self, token):
         self.base = 'https://api.groupme.com/v3'
 
     def send_msg(self, user_id, msg):
