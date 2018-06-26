@@ -26,6 +26,6 @@ class API:
 
         data = json.dumps(data, indent=2)
 
-        return requests.post(self.base + SEND_URL,
+        print(requests.post(self.base + SEND_URL,
                       headers=headers,
-                      data=str(data))
+                      data=str(data)).__dict__)
