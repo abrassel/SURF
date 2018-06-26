@@ -1,5 +1,4 @@
 from flask import Flask, request
-import os
 from API import API
 
 valid_commands = set([
@@ -12,7 +11,7 @@ has_args = set([
     ])
 
 app = Flask(__name__)
-api = API(os.environ.get('token'))
+api = API()
 
 def parse(token):
     if token[0] != '!' or len(token) == 1:

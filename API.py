@@ -15,8 +15,10 @@ base = 'https://api.groupme.com/v3'
 
 class API:
     def __init__(self):
-
-    def send_msg(self, user_id, msg):
+        pass
+    
+    @staticmethod
+    def send_msg(user_id, msg):
         data = {"direct_message":
         {
             "text": msg,
