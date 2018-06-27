@@ -36,6 +36,8 @@ def help(args, uid):
     Available Commands
     ------------------
     help: print this dialogue.
+    share <group> <target>: share group in target group
+    add <usr> <group>: add a user to named group
     groups: list all groups.
     join <group>: self-explanatory.
     create <group> [share_group]: create group, optionally share to share_group.
@@ -56,15 +58,34 @@ def join(args, uid):
     pass
 
 def create(args, uid):
-    pass
+    api.create_group(args)
+    
 
 def add(args, uid):
     pass
 
 def subscribe(args, uid):
-    pass
+    result = api.subscribe(args)
+    if result == -1:
+        api.send_msg(uid, 'User %s is already subscribed.' % (args,))
+    elif result == -2:
+        api.send_msg(uid, 'User %s does not exist.' % (args,))
+    else:
+        api.send_msg(uid, 'Successfully subscribed user % s.' % (args,))
 
 def unsubscribe(args, uid):
+    result = api.unsubscribe(uid)
+
+    if result == -1:
+        api.send_msg(uid, 'You are not currently subscribed to cat facts')
+
+    if result == -2:
+        api.send_msg(uid, 'Your RNG was not high enough.')
+
+    else:
+        api.send_msg(uid, 'Successfully unsubscribed.')
+
+def share(args, uid):
     pass
 
 
