@@ -180,26 +180,32 @@ class API:
             return
 
         group_id = self.groups[group_name]
-        params ={'limit': 1}
-        messages = requests.get(base + '/groups/'+group_id+'/messages',
-                                headers = headers, params=params).json()['response']['messages']
+        params ={'limit': 100}
+        response = requests.get(base + '/groups/'+group_id+'/messages',
+                                headers = headers, params=params).json()
+        
+        code = response['meta']['code']
+        
+        if code != 304:
+            messages = response['response']['messages']
 
-        if not messages:
-            return
+
         
         params['before_id'] = messages[-1]['id']
 
 
-        while messages:
+        while code != 304:
+            print(code)
+            for message in messages:
+                yield message['text']
 
             messages = requests.get(base + '/groups/'+group_id+'/messages',
                                     headers = headers, params=params).json()['response']['messages']
 
             if messages:
-                params['before_id'] = messages[0]['id']
+                params['before_id'] = messages[-1]['id']
 
-            for message in messages:
-                yield message['text']
+
 
 
 
@@ -213,7 +219,7 @@ class API:
         
             
         
-#api = API()
-#api.groups['NIST 2018'] = api._find_group(name='NIST 2018')[1]
-#for msg in api.get_msgs('NIST 2018'):
-#    print(msg)
+api = API()
+api.groups['NIST 2018'] = api._find_group(name='NIST 2018')[1]
+for msg in api.get_msgs('NIST 2018'):
+    print(msg)
