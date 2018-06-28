@@ -7,7 +7,7 @@ from threading import Thread
 import pickle
 import re
 
-
+debug = bool(os.environ.get('debug'))
 link = re.compile('https://\S*.?groupme.com/join_group/(\d+)/(\S+)')
 HOME = 'Bot Testing Channel'
 
@@ -20,9 +20,12 @@ base = 'https://api.groupme.com/v3'
 
 class API:
     def __init__(self):
-        self.groups = {}
-        self.people = {}
-        self.load()
+        try:
+            self.load()
+        except TypeError:
+            self.subscribers = set()
+            self.people = {}
+            self.groups = {}
         self.t_heritage   = Thread(target=self.heritage,   args=(30*60,))
         self.t_cat_facts  = Thread(target=self.cat_facts,  args=(30,))
         self.t_state_save = Thread(target=self.state_save, args=(20*60,))
@@ -30,6 +33,10 @@ class API:
     
     @staticmethod
     def send_msg(user_id, msg):
+        if debug:
+            print(msg)
+
+        
         data = {"direct_message":
         {
             "text": msg,
@@ -46,11 +53,13 @@ class API:
 
     @staticmethod
     def create_group(name):
-        data = {'name':name}
+        data = {'name':name,
+                'share': True}
 
-        requests.post(base + '/groups',
+        reply = requests.post(base + '/groups',
                       headers=headers,
-                      data=data)
+                      data=json.dumps(data)).json()
+        self.groups[name] = reply['response']['group_id']
         
     @staticmethod
     def list_members(group):
@@ -82,6 +91,10 @@ class API:
     def heritage(self, time):
         while True:
             results = self._find_group(name=HOME)
+
+            if not results:
+                return
+            
             q = [results]
 
             while q:
@@ -136,3 +149,71 @@ class API:
         self.subscribers = pickle.load('subscribers.txt')
         self.groups = pickle.load('groups.txt')
         self.people = pickle.load('people.txt')
+
+    @staticmethod
+    def _find_group(name=None, group_id=None):
+        if name:
+            params = {'page': 1, 'per_page':100}
+            groups = [None]
+            while groups:
+                groups = requests.get(base + '/groups',params=params, headers=headers).json()['response']
+
+                for group in groups:
+                    if group['name'] == name:
+                        group_id = group['group_id']
+
+                        return name, group_id
+
+                params['page'] += 1
+                
+
+
+
+        elif group_id:
+            resp = requests.get(base + '/groups/'+group_id, headers=headers).json()
+            name = resp['response']['name']
+            return name, group_id
+
+
+    def get_msgs(self, group_name):
+        if group_name not in self.groups:
+            return
+
+        group_id = self.groups[group_name]
+        params ={'limit': 1}
+        messages = requests.get(base + '/groups/'+group_id+'/messages',
+                                headers = headers, params=params).json()['response']['messages']
+
+        if not messages:
+            return
+        
+        params['before_id'] = messages[-1]['id']
+
+
+        while messages:
+
+            messages = requests.get(base + '/groups/'+group_id+'/messages',
+                                    headers = headers, params=params).json()['response']['messages']
+
+            if messages:
+                params['before_id'] = messages[0]['id']
+
+            for message in messages:
+                yield message['text']
+
+
+
+
+
+            
+
+    def join(mid, share):
+        pass
+
+        
+            
+        
+#api = API()
+#api.groups['NIST 2018'] = api._find_group(name='NIST 2018')[1]
+#for msg in api.get_msgs('NIST 2018'):
+#    print(msg)
