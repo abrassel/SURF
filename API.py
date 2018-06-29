@@ -9,7 +9,7 @@ import re
 
 debug = bool(os.environ.get('debug'))
 link = re.compile('https://\S*.?groupme.com/join_group/(\d+)/(\S+)')
-HOME = 'Bot Testing Channel'
+HOME = 'NIST 2018'
 
 headers = {
     'Content-Type': 'application/json;charset=UTF-8',
@@ -96,23 +96,33 @@ class API:
                 return
             
             q = [results]
-
+            found = set()
             while q:
                 cur = q.pop()
+                print('looking at: ' +  cur[0])
                 self.groups[cur[0]] = cur[1]
-
                 for message in self.get_msgs(cur[0]):
+
+                    if not message:
+                        continue
                     result = link.search(message)
 
                     if result:
+                        
                         mid,share = result.groups(1)
                         name, gid = self.join(mid,share)
 
+                        
+
                         if name:
-                            q.append((name, gid))
+                            print(name)
+                            if gid not in found:
+                                found.add(gid)
+                                q.append((name, gid))
             
 
-
+            # now generate people list based on folks in HOME
+            
 
             
             sleep(time)
@@ -158,6 +168,7 @@ class API:
             while groups:
                 groups = requests.get(base + '/groups',params=params, headers=headers).json()['response']
 
+
                 for group in groups:
                     if group['name'] == name:
                         group_id = group['group_id']
@@ -195,13 +206,13 @@ class API:
 
 
         while code != 304:
-            print(code)
             for message in messages:
                 yield message['text']
-
-            messages = requests.get(base + '/groups/'+group_id+'/messages',
+            try:
+                messages = requests.get(base + '/groups/'+group_id+'/messages',
                                     headers = headers, params=params).json()['response']['messages']
-
+            except json.decoder.JSONDecodeError:
+                raise StopIteration
             if messages:
                 params['before_id'] = messages[-1]['id']
 
@@ -212,14 +223,17 @@ class API:
 
 
             
-
+    @staticmethod
     def join(mid, share):
-        pass
+        temp = requests.post('https://v2.groupme.com/groups/'+mid+'/join/'+share, headers=headers)
 
+
+        if temp.json()['meta']['code'] == 404:
+            return None, None
+
+        temp2 = temp.json()['response']['group']
+        return temp2['name'], temp2['id']
         
-            
         
 api = API()
-api.groups['NIST 2018'] = api._find_group(name='NIST 2018')[1]
-for msg in api.get_msgs('NIST 2018'):
-    print(msg)
+api.heritage(3600)
