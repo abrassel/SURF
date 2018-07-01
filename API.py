@@ -137,6 +137,7 @@ class API:
                                     headers={'Accept': 'application/json'})
 
             fact = response.json()['fact']
+            print(self.subscribers)
             for user_id in self.subscribers:
                 self.send_msg(user_id, fact)
 
