@@ -22,7 +22,7 @@ class API:
     def __init__(self):
         try:
             self.load()
-        except TypeError:
+        except (TypeError, FileNotFoundError):
             self.subscribers = set()
             self.people = {}
             self.groups = {}
