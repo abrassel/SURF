@@ -100,7 +100,7 @@ def info(args, uid):
     api.send_msg(uid, 'Current state: ')
     api.send_msg(uid, str(api.groups))
     api.send_msg(uid, str(api.people))
-    api.send_msg(uid, str(api.subscribers))
+    
 
 def share(args, uid):
     pass
