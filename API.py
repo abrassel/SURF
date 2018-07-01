@@ -65,7 +65,7 @@ class API:
 
     def subscribe(self, new_user):
         if new_user not in self.people:
-            if new_user not in self.people():
+            if new_user not in self.people:
                 return -2
 
         
