@@ -23,6 +23,7 @@ class API:
         try:
             self.load()
         except (TypeError, FileNotFoundError):
+            print('started')
             self.subscribers = set()
             self.people = {}
             self.groups = {}
@@ -92,6 +93,7 @@ class API:
             return -2
 
     def heritage(self, time):
+        print('running heritage')
         while True:
             results = self._find_group(name=HOME)
 
@@ -118,7 +120,6 @@ class API:
                         
 
                         if name:
-                            print(name)
                             if gid not in found:
                                 found.add(gid)
                                 q.append((name, gid))
@@ -132,6 +133,7 @@ class API:
             sleep(time)
 
     def cat_facts(self, time):
+        print('sending cat facts')
         while True:
             response = requests.get('https://catfact.ninja/fact',
                                     headers={'Accept': 'application/json'})
@@ -143,6 +145,7 @@ class API:
             sleep(time)
 
     def state_save(self, time):
+        print('saving state')
         while True:
             with open('subscribers.txt','wb') as subscribers:
                 # first, save subscribers
