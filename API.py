@@ -73,7 +73,7 @@ class API:
         s.add(user_id)
 
         with open('subscribers.txt','wb') as subscribers:
-            pickle.dump(s)
+            pickle.dump(s, subscribers)
         
     def unsubscribe(self, cur_user):
         with open('subscribers.txt','rb') as subscribers:
@@ -85,7 +85,7 @@ class API:
         if random() > .75:
             s.remove(cur_user)
             with open('subscribers.txt','wb') as subscribers:
-                pickle.dump(s)
+                pickle.dump(s, subscribers)
         else:
             return -2
 
