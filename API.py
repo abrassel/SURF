@@ -129,8 +129,9 @@ class API:
             self.people = dict([(member['nickname'], member['user_id'])
                                 for member in self._get_members(results[1])])
             
-
+            print('starting heritage sleep')
             sleep(time)
+            print('ending heritage sleep')
 
     def cat_facts(self, time):
         print('sending cat facts')
