@@ -22,7 +22,6 @@ class API:
         try:
             self.load()
         except (TypeError, FileNotFoundError, EOFError):
-            print('started')
             self.subscribers = set()
             self.people = {}
             self.groups = {}
