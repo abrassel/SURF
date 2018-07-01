@@ -145,6 +145,7 @@ def webhook():
         print('missing args')
         return '400'
 
+    print(args)
     eval(cmd+'('+str(args)+','+user_id+')')
     
     
