@@ -71,7 +71,7 @@ class API:
 
 
         s.add(user_id)
-
+        print(s)
         with open('subscribers.txt','wb') as subscribers:
             pickle.dump(s, subscribers)
         
