@@ -125,6 +125,8 @@ class API:
                                 for member in self._get_members(results[1])])
             
             print('starting heritage sleep')
+            if time == 0:
+                return
             sleep(time)
             print('ending heritage sleep')
 
