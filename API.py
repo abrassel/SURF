@@ -21,6 +21,7 @@ class API:
     def __init__(self):
         self.people = {}
         self.groups = {}
+
             
         self.t_heritage   = Thread(target=self.heritage,   args=(30*60,)).start()
         self.t_cat_facts  = Thread(target=self.cat_facts,  args=(30,)).start()
