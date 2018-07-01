@@ -21,7 +21,7 @@ class API:
     def __init__(self):
         try:
             self.load()
-        except (TypeError, FileNotFoundError):
+        except (TypeError, FileNotFoundError, EOFError):
             print('started')
             self.subscribers = set()
             self.people = {}
