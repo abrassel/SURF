@@ -25,7 +25,7 @@ def parse(token):
 
     arg = None
     if len(words) > 1:
-        arg = " ".join(words[1])
+        arg = " ".join(words[1:])
 
 
     return cmd, arg
@@ -145,8 +145,7 @@ def webhook():
         print('missing args')
         return '400'
 
-    print(args)
-    eval(cmd+'('+str(args)+','+user_id+')')
+    eval(cmd+'('+args+','+user_id+')')
     
     
 
