@@ -26,9 +26,9 @@ class API:
             self.subscribers = set()
             self.people = {}
             self.groups = {}
-        self.t_heritage   = Thread(target=self.heritage,   args=(30*60,)).start()
-        self.t_cat_facts  = Thread(target=self.cat_facts,  args=(30,)).start()
-        self.t_state_save = Thread(target=self.state_save, args=(20*60,)).start()
+            self.t_heritage   = Thread(target=self.heritage,   args=(30*60,)).start()
+            self.t_cat_facts  = Thread(target=self.cat_facts,  args=(30,)).start()
+            self.t_state_save = Thread(target=self.state_save, args=(20*60,)).start()
 
     
     @staticmethod
@@ -39,11 +39,11 @@ class API:
 
         
         data = {"direct_message":
-        {
-            "text": msg,
-            "attachments": [],
-            "recipient_id": user_id,
-            "source_guid": str(time())}
+                {
+                    "text": msg,
+                    "attachments": [],
+                    "recipient_id": user_id,
+                    "source_guid": str(time())}
         }
 
         data = json.dumps(data, indent=2)
@@ -58,8 +58,8 @@ class API:
                 'share': True}
 
         reply = requests.post(base + '/groups',
-                      headers=headers,
-                      data=json.dumps(data)).json()
+                              headers=headers,
+                              data=json.dumps(data)).json()
         self.groups[name] = reply['response']['group_id']
         
     @staticmethod
@@ -122,12 +122,12 @@ class API:
                             if gid not in found:
                                 found.add(gid)
                                 q.append((name, gid))
-            
+                                
 
             # now generate people list based on folks in HOME
             self.people = dict([(member['nickname'], member['user_id'])
                                 for member in self._get_members(results[1])])
-                
+            
 
             sleep(time)
 
@@ -162,15 +162,15 @@ class API:
 
     def load(self):
         with open('subscribers.txt','rb') as subscribers:
-                # first, save subscribers
-                self.subscribers = pickle.load(subscribers)
-            with open('groups.txt','rb') as groups:
-                # next, save the group list
-                self.groups = pickle.load(groups)
+            # first, save subscribers
+            self.subscribers = pickle.load(subscribers)
+        with open('groups.txt','rb') as groups:
+            # next, save the group list
+            self.groups = pickle.load(groups)
 
-            with open('people.txt','rb') as people:
-                # finally, save the people
-                self.people = pickle.load(people)
+        with open('people.txt','rb') as people:
+            # finally, save the people
+            self.people = pickle.load(people)
 
     @staticmethod
     def _find_group(name=None, group_id=None):
@@ -222,7 +222,7 @@ class API:
                 yield message['text']
             try:
                 messages = requests.get(base + '/groups/'+group_id+'/messages',
-                                    headers = headers, params=params).json()['response']['messages']
+                                        headers = headers, params=params).json()['response']['messages']
             except json.decoder.JSONDecodeError:
                 raise StopIteration
             if messages:
@@ -236,7 +236,7 @@ class API:
 
         for member in members:
             yield member
-        
+            
 
 
 
