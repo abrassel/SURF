@@ -3,7 +3,8 @@ from API import API
 
 valid_commands = set([
     'help', 'groups', 'join', 'create',
-    'add', 'subscribe', 'unsubscribe', 'report', 'ban'
+    'add', 'subscribe', 'unsubscribe', 'report', 'ban',
+    'info', 'heritage'
     ])
 has_args = set([
     'join', 'create', 'add', 'subscribe',
@@ -79,6 +80,7 @@ def subscribe(args, uid):
 def unsubscribe(args, uid):
     result = api.unsubscribe(uid)
 
+    print(str(result))
     if result == -1:
         api.send_msg(uid, 'You are not currently subscribed to cat facts.')
 
