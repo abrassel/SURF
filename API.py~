@@ -1,7 +1,0 @@
-class API:
-    def __init__(self, token):
-        self._token = token
-
-
-    def send_msg(self, user_id, msg):
-        pass

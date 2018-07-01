@@ -9,7 +9,7 @@ import re
 
 debug = bool(os.environ.get('debug'))
 link = re.compile('https://\S*.?groupme.com/join_group/(\d+)/(\S+)')
-HOME = 'NIST 2018'
+HOME = 'Bot Testing Channel'
 
 headers = {
     'Content-Type': 'application/json;charset=UTF-8',
@@ -26,15 +26,16 @@ class API:
             self.subscribers = set()
             self.people = {}
             self.groups = {}
-        self.t_heritage   = Thread(target=self.heritage,   args=(30*60,))
-        self.t_cat_facts  = Thread(target=self.cat_facts,  args=(30,))
-        self.t_state_save = Thread(target=self.state_save, args=(20*60,))
+        self.t_heritage   = Thread(target=self.heritage,   args=(30*60,)).start()
+        self.t_cat_facts  = Thread(target=self.cat_facts,  args=(30,)).start()
+        self.t_state_save = Thread(target=self.state_save, args=(20*60,)).start()
 
     
     @staticmethod
     def send_msg(user_id, msg):
         if debug:
             print(msg)
+            return
 
         
         data = {"direct_message":
@@ -68,7 +69,8 @@ class API:
 
     def subscribe(self, new_user):
         if new_user not in self.people:
-            return -2
+            if new_user not in self.people():
+                return -2
 
         
         user_id = self.people[new_user]
@@ -77,7 +79,7 @@ class API:
 
 
         self.subscribers.add(user_id)
-
+        
     def unsubscribe(self, cur_user):
         
         if cur_user not in self.subscribers:
@@ -85,6 +87,7 @@ class API:
 
         if random() > .75:
             self.subscribers.remove(cur_user)
+            
         else:
             return -2
 
@@ -122,9 +125,10 @@ class API:
             
 
             # now generate people list based on folks in HOME
-            
+            self.people = dict([(member['nickname'], member['user_id'])
+                                for member in self._get_members(results[1])])
+                
 
-            
             sleep(time)
 
     def cat_facts(self, time):
@@ -140,25 +144,33 @@ class API:
 
     def state_save(self, time):
         while True:
-            
-            # first, save subscribers
-            pickle.dump(self.subscribers,
-                        'subscribers.txt')
+            with open('subscribers.txt','wb') as subscribers:
+                # first, save subscribers
+                pickle.dump(self.subscribers,
+                            subscribers)
+            with open('groups.txt','wb') as groups:
+                # next, save the group list
+                pickle.dump(self.groups,
+                            groups)
 
-            # next, save the group list
-            pickle.dump(self.groups,
-                        'groups.txt')
-
-            # finally, save the people
-            pickle.dump(self.people,
-                        'people.txt')
+            with open('people.txt','wb') as people:
+                # finally, save the people
+                pickle.dump(self.people,
+                            people)
 
             sleep(time)
 
     def load(self):
-        self.subscribers = pickle.load('subscribers.txt')
-        self.groups = pickle.load('groups.txt')
-        self.people = pickle.load('people.txt')
+        with open('subscribers.txt','rb') as subscribers:
+                # first, save subscribers
+                self.subscribers = pickle.load(subscribers)
+            with open('groups.txt','rb') as groups:
+                # next, save the group list
+                self.groups = pickle.load(groups)
+
+            with open('people.txt','rb') as people:
+                # finally, save the people
+                self.people = pickle.load(people)
 
     @staticmethod
     def _find_group(name=None, group_id=None):
@@ -218,7 +230,13 @@ class API:
 
 
 
+    @staticmethod
+    def _get_members(group_id):
+        members = requests.get(base + '/groups/'+group_id,headers=headers).json()['response']['members']
 
+        for member in members:
+            yield member
+        
 
 
 
@@ -233,7 +251,13 @@ class API:
 
         temp2 = temp.json()['response']['group']
         return temp2['name'], temp2['id']
+
+    def name(self, uid_t):
+        for name,uid in self.people.items():
+            if uid == uid_t:
+                return name
+
         
         
 api = API()
-api.heritage(3600)
+#api.heritage(3600)

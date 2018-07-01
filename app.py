@@ -72,18 +72,33 @@ def subscribe(args, uid):
         api.send_msg(uid, 'User %s does not exist.' % (args,))
     else:
         api.send_msg(uid, 'Successfully subscribed user % s.' % (args,))
+        api.send_msg(args,
+                     'You have been subscribed to cat facts by %s!  Enjoy!'
+                     % (api.name(uid),))
 
 def unsubscribe(args, uid):
     result = api.unsubscribe(uid)
 
     if result == -1:
-        api.send_msg(uid, 'You are not currently subscribed to cat facts')
+        api.send_msg(uid, 'You are not currently subscribed to cat facts.')
 
     if result == -2:
         api.send_msg(uid, 'Your RNG was not high enough.')
 
     else:
-        api.send_msg(uid, 'Successfully unsubscribed.')
+        api.send_msg(uid, 'Successfully unsubscribed!')
+
+def heritage(args, uid):
+    api.send_msg(uid, 'Updating!')
+    api.heritage(0)
+    api.send_msg(uid, str(api.groups))
+    api.send_msg(uid, str(api.people))
+
+def info(args, uid):
+    api.send_msg(uid, 'Current state: ')
+    api.send_msg(uid, str(api.groups))
+    api.send_msg(uid, str(api.people))
+    api.send_msg(uid, str(api.subscribers))
 
 def share(args, uid):
     pass
@@ -103,6 +118,7 @@ def webhook():
 
     try:
         user_id = request.json['user_id']
+
         text = request.json['text']
     except KeyError:
         print('key error')
