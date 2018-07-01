@@ -72,7 +72,7 @@ class API:
 
 
         s.add(user_id)
-        print(s)
+        print('This is the result: ' + str(s))
         with open('subscribers.txt','wb') as subscribers:
             pickle.dump(s, subscribers)
         
@@ -134,15 +134,15 @@ class API:
             print('ending heritage sleep')
 
     def cat_facts(self, time):
-        print('sending cat facts')
-        with open('subscribers.txt','rb') as subscribers:
-            s = pickle.load(subscribers)
+
         while True:
+            print('sending cat facts')
+            with open('subscribers.txt','rb') as subscribers:
+                s = pickle.load(subscribers)
             response = requests.get('https://catfact.ninja/fact',
                                     headers={'Accept': 'application/json'})
 
             fact = response.json()['fact']
-            print(s)
             for user_id in s:
                 self.send_msg(user_id, fact)
 
