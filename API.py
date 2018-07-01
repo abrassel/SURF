@@ -7,7 +7,6 @@ from threading import Thread
 import pickle
 import re
 
-debug = bool(os.environ.get('debug'))
 link = re.compile('https://\S*.?groupme.com/join_group/(\d+)/(\S+)')
 HOME = 'Bot Testing Channel'
 
@@ -34,10 +33,6 @@ class API:
     
     @staticmethod
     def send_msg(user_id, msg):
-        if debug:
-            print(msg)
-            return
-
         
         data = {"direct_message":
                 {
