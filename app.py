@@ -78,13 +78,13 @@ def subscribe(args, uid):
                      % (api.name(uid),))
 
 def unsubscribe(args, uid):
+    print(type(uid))
     result = api.unsubscribe(uid)
 
-    print(str(result))
     if result == -1:
         api.send_msg(uid, 'You are not currently subscribed to cat facts.')
 
-    if result == -2:
+    elif result == -2:
         api.send_msg(uid, 'Your RNG was not high enough.')
 
     else:

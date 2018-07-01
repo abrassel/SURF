@@ -24,10 +24,12 @@ class API:
         except (TypeError, FileNotFoundError, EOFError):
             self.subscribers = set()
             self.people = {}
+
             self.groups = {}
-            self.t_heritage   = Thread(target=self.heritage,   args=(30*60,)).start()
-            self.t_cat_facts  = Thread(target=self.cat_facts,  args=(30,)).start()
-            self.t_state_save = Thread(target=self.state_save, args=(20*60,)).start()
+            
+        self.t_heritage   = Thread(target=self.heritage,   args=(30*60,)).start()
+        self.t_cat_facts  = Thread(target=self.cat_facts,  args=(30,)).start()
+        self.t_state_save = Thread(target=self.state_save, args=(20*60,)).start()
 
     
     @staticmethod
