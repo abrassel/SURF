@@ -22,7 +22,6 @@ class API:
         try:
             self.load()
         except (TypeError, FileNotFoundError, EOFError):
-            self.subscribers = set()
             self.people = {}
 
             self.groups = {}
@@ -65,26 +64,34 @@ class API:
 
 
     def subscribe(self, new_user):
+        with open('subscribers.txt','rb') as subscribers:
+            s = pickle.load(subscribers)
         if new_user not in self.people:
             if new_user not in self.people:
                 return -2
 
         
         user_id = self.people[new_user]
-        if user_id in self.subscribers:
+        if user_id in s:
             return -1
 
 
-        self.subscribers.add(user_id)
+        s.add(user_id)
+
+        with open('subscribers.txt','wb') as subscribers:
+            pickle.dump(s)
         
     def unsubscribe(self, cur_user):
+        with open('subscribers.txt','rb') as subscribers:
+            s = pickle.load(subscribers)
         
-        if cur_user not in self.subscribers:
+        if cur_user not in s:
             return -1
 
         if random() > .75:
-            self.subscribers.remove(cur_user)
-            
+            s.remove(cur_user)
+            with open('subscribers.txt','wb') as subscribers:
+                pickle.dump(s)
         else:
             return -2
 
@@ -133,13 +140,15 @@ class API:
 
     def cat_facts(self, time):
         print('sending cat facts')
+        with open('subscribers.txt','rb') as subscribers:
+            s = pickle.load(subscribers)
         while True:
             response = requests.get('https://catfact.ninja/fact',
                                     headers={'Accept': 'application/json'})
 
             fact = response.json()['fact']
-            print(self.subscribers)
-            for user_id in self.subscribers:
+            print(s)
+            for user_id in s:
                 self.send_msg(user_id, fact)
 
             sleep(time)
