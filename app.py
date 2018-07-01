@@ -78,8 +78,7 @@ def subscribe(args, uid):
                      % (api.name(uid),))
 
 def unsubscribe(args, uid):
-    print(type(uid))
-    result = api.unsubscribe(uid)
+    result = api.unsubscribe(str(uid))
 
     if result == -1:
         api.send_msg(uid, 'You are not currently subscribed to cat facts.')
