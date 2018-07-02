@@ -75,7 +75,7 @@ def subscribe(args, uid):
         api.send_msg(uid, 'Successfully subscribed user % s.' % (args,))
         api.send_msg(args,
                      'You have been subscribed to cat facts by %s!  Enjoy!'
-                     % (api.name(uid),))
+                     % (api.name(str(uid)),))
 
 def unsubscribe(args, uid):
     result = api.unsubscribe(str(uid))
