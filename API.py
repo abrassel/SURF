@@ -44,7 +44,7 @@ class API:
                       data=str(data))
 
 
-    def create_group(self, name):
+    def create_group(self, name, uid):
             
 
         data = {'name':name,
