@@ -79,7 +79,7 @@ def add(args, uid):
             usr not in api.people):
         api.send_msg(uid, 'Group or user does not exist.')
 
-    api.add_member(args.groups[group], args.people[usr])
+    api.add_member(api.groups[group], api.people[usr])
     
 
 def subscribe(args, uid):
