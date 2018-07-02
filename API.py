@@ -88,7 +88,7 @@ class API:
 
         print(requests.post(url,
                             headers=headers,
-                            data=data
+                            data=json.dumps(data)
                             ).__dict__)
         
     @staticmethod
