@@ -69,7 +69,18 @@ def create(args, uid):
     
 
 def add(args, uid):
-    pass
+    args = args.split(' ')
+
+    if len(args) != 2:
+        api.send_msg(uid, '!add <group> <usr>')
+    group, usr = args
+
+    if group not in args.groups (
+            or usr not in args.people):
+        api.send_msg(uid, 'Group or user does not exist.')
+
+    api.add_member(args.groups[group], args.people[usr])
+    
 
 def subscribe(args, uid):
     result = api.subscribe(args)

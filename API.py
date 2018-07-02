@@ -75,27 +75,20 @@ class API:
 
 
     def add_member(self, group, user):
-        if isinstance(user, str) and user not in self.people:
-            return -1
-
-        if isinstance(user, int):
-            user_id = str(user)
-        else:
-            user_id = self.people['user']
-
+        
         
         url = base + '/groups/' + group + '/members/add'
         data = {'language': 'en-US',
                 'members': [{
                     'nickname': user,
                     'guid': str(time()),
-                    'user_id': user_id
+                    'user_id': user
                 }]
         }
 
         print(requests.post(url,
                             headers=headers,
-                            data=json.dumps(data)
+                            data=data
                             ).__dict__)
         
     @staticmethod
