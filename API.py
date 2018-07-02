@@ -227,7 +227,8 @@ class API:
         if code != 304:
             messages = response['response']['messages']
 
-
+        if not messages:
+            raise StopIteration
         
         params['before_id'] = messages[-1]['id']
 
