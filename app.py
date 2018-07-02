@@ -75,8 +75,8 @@ def add(args, uid):
         api.send_msg(uid, '!add <group> <usr>')
     group, usr = args
 
-    if group not in args.groups (
-            or usr not in args.people):
+    if group not in args.groups or (
+            usr not in args.people):
         api.send_msg(uid, 'Group or user does not exist.')
 
     api.add_member(args.groups[group], args.people[usr])
