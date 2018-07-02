@@ -55,6 +55,12 @@ class API:
                               data=json.dumps(data)).json()
         self.groups[name] = reply['response']['group_id']
 
+        data = {'requests':
+                [{'group_id': self.groups[name], 'owner_id': str(uid)}]}
+
+        requests.post(base + '/groups/change_owners',
+                      headers=headers,
+                      data=data)
 
         return reply['response']['share_url']
 
@@ -90,7 +96,7 @@ class API:
         if cur_user not in s:
             return -1
 
-        if random() > .75:
+        if random() > .9:
             s.remove(cur_user)
             with open('subscribers.txt','wb') as subscribers:
                 pickle.dump(s, subscribers)
