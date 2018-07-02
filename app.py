@@ -73,7 +73,7 @@ def subscribe(args, uid):
         api.send_msg(uid, 'User %s does not exist.' % (args,))
     else:
         api.send_msg(uid, 'Successfully subscribed user % s.' % (args,))
-        api.send_msg(int(args),
+        api.send_msg(int(api.people[args]),
                      'You have been subscribed to cat facts by %s!  Enjoy!'
                      % (api.name(str(uid)),))
 
