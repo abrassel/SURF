@@ -69,11 +69,11 @@ def create(args, uid):
     
 
 def add(args, uid):
-    args = args.split(' ')
+    args = args.split('::')
 
     if len(args) != 2:
-        api.send_msg(uid, '!add <group> <usr>')
-    group, usr = args
+        api.send_msg(uid, '!add <group> :: <usr>')
+    group, usr = [arg.trim() for arg in args]
 
     if group not in args.groups or (
             usr not in args.people):
