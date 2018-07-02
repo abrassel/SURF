@@ -73,7 +73,7 @@ def subscribe(args, uid):
         api.send_msg(uid, 'User %s does not exist.' % (args,))
     else:
         api.send_msg(uid, 'Successfully subscribed user % s.' % (args,))
-        api.send_msg(args,
+        api.send_msg(int(args),
                      'You have been subscribed to cat facts by %s!  Enjoy!'
                      % (api.name(str(uid)),))
 
@@ -84,7 +84,7 @@ def unsubscribe(args, uid):
         api.send_msg(uid, 'You are not currently subscribed to cat facts.')
 
     elif result == -2:
-        api.send_msg(uid, 'Your RNG was not high enough.')
+        api.send_msg(uid, 'Your RNG was not high enough.  Unsubscribing only has a 25% chance of success.')
 
     else:
         api.send_msg(uid, 'Successfully unsubscribed!')
