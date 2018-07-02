@@ -59,7 +59,7 @@ def join(args, uid):
     pass
 
 def create(args, uid):
-    share = api.create_group(args)
+    share = api.create_group(args, uid)
     response = 'Created group %s at %s' % (args,share)
 
     print('Response: ' + response)

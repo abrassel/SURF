@@ -59,13 +59,38 @@ class API:
                 [{'group_id': self.groups[name], 'owner_id': str(uid)}]}
 
         sleep(2)
+
+        results = self.add_member(self.groups[name],
+                                  str(uid))
+        if result == -1:
+            return -1
+                        
+                                  
+        sleep(2)
         print(requests.post(base + '/groups/change_owners',
                       headers=headers,
                       data=data).__dict__)
 
         return reply['response']['share_url']
 
+
+    def add_member(self, group, user):
+        if user not in self.people:
+            return -1
         
+        url = base + '/groups/' + group + '/members/add'
+        data = {'language': 'en-US',
+                'members': [{
+                    'nickname': user,
+                    'guid': str(time()),
+                    'user_id': self.people['user']
+                }]
+        }
+
+        print(requests.post(url,
+                            headers=headers,
+                            data=json.dumps(data)
+                            ).__dict__)
         
     @staticmethod
     def list_members(group):
