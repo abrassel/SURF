@@ -62,7 +62,7 @@ class API:
 
         results = self.add_member(self.groups[name],
                                   str(uid))
-        if result == -1:
+        if results == -1:
             return -1
                         
                                   
