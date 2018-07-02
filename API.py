@@ -61,7 +61,7 @@ class API:
         sleep(2)
 
         results = self.add_member(self.groups[name],
-                                  str(uid))
+                                  uid)
         if results == -1:
             return -1
                         
@@ -75,15 +75,21 @@ class API:
 
 
     def add_member(self, group, user):
-        if user not in self.people:
+        if isinstance(user, str) and user not in self.people:
             return -1
+
+        if isinstance(user, int):
+            user_id = str(user)
+        else:
+            user_id = self.people['user']
+
         
         url = base + '/groups/' + group + '/members/add'
         data = {'language': 'en-US',
                 'members': [{
                     'nickname': user,
                     'guid': str(time()),
-                    'user_id': self.people['user']
+                    'user_id': user_id
                 }]
         }
 
