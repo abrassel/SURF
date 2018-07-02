@@ -37,8 +37,7 @@ def help(args, uid):
     Available Commands
     ------------------
     help: print this dialogue.
-    share <group> <target>: share group in target group
-    add <usr> <group>: add a user to named group
+    add <usr> :: <group>: add a user to named group
     groups: list all groups.
     join <group>: self-explanatory.
     create <group>: create new group.
@@ -53,10 +52,17 @@ def help(args, uid):
     
 
 def groups(args, uid):
-    pass
+    result = '\n'.join(api.groups)
+
+    api.send_msg(uid, result)
 
 def join(args, uid):
-    pass
+
+    if args not in api.groups:
+        api.send_msg(uid, 'This group is not visible or does not exist.')
+        return
+    
+    api.add_member(api.groups[args], uid)
 
 def create(args, uid):
     share = api.create_group(args, uid)
@@ -72,12 +78,14 @@ def add(args, uid):
     args = args.split('::')
 
     if len(args) != 2:
-        api.send_msg(uid, '!add <group> :: <usr>')
-    group, usr = [arg.strip() for arg in args]
+        api.send_msg(uid, '!add <usr> :: <group>')
+        return
+    usr,group = [arg.strip() for arg in args]
 
     if group not in api.groups or (
             usr not in api.people):
         api.send_msg(uid, 'Group or user does not exist.')
+        return
 
     api.add_member(api.groups[group], api.people[usr])
     

@@ -69,7 +69,7 @@ class API:
         sleep(2)
         print(requests.post(base + '/groups/change_owners',
                       headers=headers,
-                      data=data).__dict__)
+                      data=json.dumps(data)).__dict__)
 
         return reply['response']['share_url']
 
@@ -80,16 +80,16 @@ class API:
         url = base + '/groups/' + group + '/members/add'
         data = {'language': 'en-US',
                 'members': [{
-                    'nickname': user,
+                    'nickname': self.name(user),
                     'guid': str(time()),
                     'user_id': user
                 }]
         }
 
-        print(requests.post(url,
-                            headers=headers,
-                            data=json.dumps(data)
-                            ).__dict__)
+        requests.post(url,
+                      headers=headers,
+                      data=json.dumps(data)
+        )
         
     @staticmethod
     def list_members(group):
