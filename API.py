@@ -58,9 +58,10 @@ class API:
         data = {'requests':
                 [{'group_id': self.groups[name], 'owner_id': str(uid)}]}
 
-        requests.post(base + '/groups/change_owners',
+        sleep(2)
+        print(requests.post(base + '/groups/change_owners',
                       headers=headers,
-                      data=data)
+                      data=data).__dict__)
 
         return reply['response']['share_url']
 
