@@ -41,7 +41,7 @@ def help(args, uid):
     add <usr> <group>: add a user to named group
     groups: list all groups.
     join <group>: self-explanatory.
-    create <group> [share_group]: create group, optionally share to share_group.
+    create <group>: create new group.
     add <usr> <group>: add user to this group.
     subscribe <usr>: subscribe user to Cat Facts.
     unsubscribe: unsubscribe yourself from Cat Facts.
@@ -59,7 +59,11 @@ def join(args, uid):
     pass
 
 def create(args, uid):
-    api.create_group(args)
+    share = api.create_group(args)
+    response = 'Created group %s at ' % (args,share)
+
+    api.send_msg(uid,response)
+        
     
 
 def add(args, uid):

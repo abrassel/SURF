@@ -43,8 +43,10 @@ class API:
                       headers=headers,
                       data=str(data))
 
-    @staticmethod
-    def create_group(name):
+
+    def create_group(self, name):
+            
+
         data = {'name':name,
                 'share': True}
 
@@ -52,6 +54,11 @@ class API:
                               headers=headers,
                               data=json.dumps(data)).json()
         self.groups[name] = reply['response']['group_id']
+
+
+        return reply['response']['share_url']
+
+        
         
     @staticmethod
     def list_members(group):
