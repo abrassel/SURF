@@ -133,7 +133,7 @@ def info(args, uid):
     
 def report(args, uid):
     api.send_msg(api.people['Brassel Sprouts'],
-                 'User %s has reported %s' % (api.name(uid),
+                 'User %s has reported %s' % (api.name(str(uid)),
                                               args))
                                               
 

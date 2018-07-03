@@ -80,7 +80,7 @@ class API:
         url = base + '/groups/' + group + '/members/add'
         data = {'language': 'en-US',
                 'members': [{
-                    'nickname': self.name(user),
+                    'nickname': self.name(str(user)),
                     'guid': str(time()),
                     'user_id': user
                 }]
