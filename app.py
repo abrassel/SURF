@@ -4,11 +4,17 @@ from API import API
 valid_commands = set([
     'help', 'groups', 'join', 'create',
     'add', 'subscribe', 'unsubscribe', 'report', 'ban',
-    'info', 'heritage'
+    'info', 'heritage', 'unban'
     ])
 has_args = set([
     'join', 'create', 'add', 'subscribe',
     'report', 'ban'
+    ])
+
+admin = set([
+    'heritage',
+    'ban',
+    'unban'
     ])
 
 app = Flask(__name__)
@@ -125,9 +131,18 @@ def info(args, uid):
     api.send_msg(uid, str(api.groups))
     api.send_msg(uid, str(api.people))
     
+def report(args, uid):
+    api.send_msg(self.people['Brassel Sprouts'],
+                 'User %s has reported %s' % (self.name(uid),
+                                              args))
+                                              
 
-def share(args, uid):
-    pass
+def ban(args, uid):
+    api.ban(args)
+
+
+def unban(args, uid):
+    api.unban(args)
 
 
 
@@ -165,6 +180,10 @@ def webhook():
 
     if cmd not in valid_commands:
         print('invalid command')
+        return '400'
+
+    if cmd in admin and user_id != self.people['Brassel Sprouts']:
+        print('Tried to access admin command')
         return '400'
 
     if cmd in has_args and not args:

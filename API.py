@@ -58,7 +58,7 @@ class API:
         data = {'requests':
                 [{'group_id': self.groups[name], 'owner_id': str(uid)}]}
 
-        sleep(2)
+        sleep(1)
 
         results = self.add_member(self.groups[name],
                                   uid)
@@ -66,7 +66,7 @@ class API:
             return -1
                         
                                   
-        sleep(2)
+        sleep(1)
         print(requests.post(base + '/groups/change_owners',
                       headers=headers,
                       data=json.dumps(data)).__dict__)
@@ -273,6 +273,14 @@ class API:
             if uid == uid_t:
                 return name
 
+
+
+
+    def ban(self, user_name):
+        pass
+
+    def unban(self, user_name):
+        pass
         
         
 api = API()
