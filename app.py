@@ -138,12 +138,30 @@ def report(args, uid):
                                               
 
 def ban(args, uid):
-    api.ban(args)
+    result = api.ban(args)
+
+    if result == -2:
+        api.send_msg(uid, 'This is not a real person.')
+
+    elif result == -1:
+        api.send_msg(uid, 'This person is already banned.')
+
+    else:
+        api.send_msg(uid, 'User succesfully banned.')
 
 
 def unban(args, uid):
-    api.unban(args)
+    result = api.unban(args)
 
+
+    if result == -2:
+        api.send_msg(uid, 'This is not a real person.')
+
+    elif result == -1:
+        api.send_msg(uid, 'This person is not currently banned.')
+
+    else:
+        api.send_msg(uid, 'User successfully unbanned.')
 
 
 @app.route('/', methods=['POST'])

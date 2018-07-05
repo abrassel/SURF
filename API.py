@@ -277,10 +277,41 @@ class API:
 
 
     def ban(self, user_name):
-        pass
+
+        if user_name not in self.people:
+            return -2
+
+        u_id = self.people[user_name]
+        
+        with open('banned.txt', 'rb') as banned:
+            ban_list = pickle.load(banned)
+
+            if u_id in ban_list:
+                return -1
+
+            ban_list.add(u_id)
+
+        with open('banned.txt', 'wb') as banned:
+            pickle.dump(ban_list, banned)
 
     def unban(self, user_name):
-        pass
+
+        if user_name not in self.people:
+            return -2
+
+        u_id = self.people[user_name]
+
+        with open('banned.txt', 'rb') as banned:
+            ban_list = pickle.load(banned)
+
+            if u_id not in ban_list:
+                return -1
+
+            ban_list.remove(u_id)
+
+
+        with open('banned.txt', 'wb') as banned:
+            pickle.dump(ban_list, banned)
         
         
 api = API()
