@@ -200,7 +200,7 @@ def webhook():
         print('invalid command')
         return '400'
 
-    if cmd in admin and user_id != self.people['Brassel Sprouts']:
+    if cmd in admin and user_id != api.people['Brassel Sprouts']:
         print('Tried to access admin command')
         return '400'
 
