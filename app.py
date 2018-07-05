@@ -1,5 +1,6 @@
 from flask import Flask, request
 from API import API
+import pickle
 
 valid_commands = set([
     'help', 'groups', 'join', 'create',
@@ -16,6 +17,11 @@ admin = set([
     'ban',
     'unban'
     ])
+
+bannable = set([subscribe,
+                report,
+                add
+                ])
 
 app = Flask(__name__)
 api = API()
@@ -199,6 +205,13 @@ def webhook():
     if cmd not in valid_commands:
         print('invalid command')
         return '400'
+
+    if cmd in bannable:
+        with open('banned.txt','rb') as banned:
+            ban_list = pickle.load(banned)
+            if str(user_id) in ban_list:
+                print('Banned user just tried to access a command')
+                return '400'
 
     if cmd in admin and user_id != api.people['Brassel Sprouts']:
         print('Tried to access admin command')
