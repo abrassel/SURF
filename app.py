@@ -84,9 +84,9 @@ def create(args, uid):
     share = api.create_group(args, uid)
     response = 'Created group %s at %s' % (args,share)
 
-    print('Response: ' + response)
 
     api.send_msg(uid,response)
+    api.msg_bot_testing(response)
         
     
 
@@ -133,8 +133,6 @@ def unsubscribe(args, uid):
 def heritage(args, uid):
     api.send_msg(uid, 'Updating!')
     api.heritage(0)
-    api.send_msg(uid, str(api.groups))
-    api.send_msg(uid, str(api.people))
 
 def info(args, uid):
     api.send_msg(uid, 'Current state: ')

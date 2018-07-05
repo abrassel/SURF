@@ -9,6 +9,7 @@ import re
 
 link = re.compile('https://\S*.?groupme.com/join_group/(\d+)/(\S+)')
 HOME = 'Bot Testing Channel'
+REPOSITORY = 'Bot Testing Channel'
 
 headers = {
     'Content-Type': 'application/json;charset=UTF-8',
@@ -21,12 +22,23 @@ class API:
     def __init__(self):
         self.people = {}
         self.groups = {}
+        self.bot_testing_channel = None
 
             
-        self.t_heritage   = Thread(target=self.heritage,   args=(30*60,)).start()
-        self.t_cat_facts  = Thread(target=self.cat_facts,  args=(30,)).start()
+        self.t_heritage   = Thread(target=self.heritage,   args=(25*60,)).start()
+        self.t_cat_facts  = Thread(target=self.cat_facts,  args=(25*60,)).start()
 
 
+    def msg_bot_testing(msg):
+        url = base + '/groups/'+self.bot_testing_channel+'/messages'
+
+        data = {'source_guid': str(time()),
+                'text': msg,
+                'attachments': []
+                }
+
+        requests.post(url,headers=headers,data=json.dumps(data))
+        
     
         
     @staticmethod
@@ -147,6 +159,8 @@ class API:
         print('running heritage')
         while True:
             results = self._find_group(name=HOME)
+            bot_testing = self._find_group(name=REPOSITORY)
+            self.bot_testing_channel = bot_testing[1]
 
             if not results:
                 return
