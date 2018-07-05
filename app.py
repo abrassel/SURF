@@ -74,7 +74,7 @@ def join(args, uid):
         api.send_msg(uid, 'This group is not visible or does not exist.')
         return
     
-    api.add_member(api.groups[args], str(uid))
+    api.add_member(api.groups[args], uid)
 
 def create(args, uid):
     share = api.create_group(args, uid)
