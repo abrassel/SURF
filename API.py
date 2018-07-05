@@ -25,7 +25,10 @@ class API:
             
         self.t_heritage   = Thread(target=self.heritage,   args=(30*60,)).start()
         self.t_cat_facts  = Thread(target=self.cat_facts,  args=(30,)).start()
+
+
     
+        
     @staticmethod
     def send_msg(user_id, msg):
         
@@ -86,10 +89,12 @@ class API:
                 }]
         }
 
-        requests.post(url,
-                      headers=headers,
-                      data=json.dumps(data)
+        temp = requests.post(url,
+                             headers=headers,
+                             data=json.dumps(data)
         )
+
+        print(temp.__dict__)
         
     @staticmethod
     def list_members(group):
