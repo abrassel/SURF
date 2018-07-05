@@ -78,7 +78,7 @@ def join(args, uid):
 
     result = api.get_share_id(args)
 
-    api.send_msg(result)
+    api.send_msg(uid, result)
 
 def create(args, uid):
     share = api.create_group(args, uid)
