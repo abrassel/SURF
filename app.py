@@ -18,9 +18,9 @@ admin = set([
     'unban'
     ])
 
-bannable = set([subscribe,
-                report,
-                add
+bannable = set(['subscribe',
+                'report',
+                'add'
                 ])
 
 app = Flask(__name__)
