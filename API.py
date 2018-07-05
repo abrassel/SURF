@@ -70,12 +70,22 @@ class API:
                         
                                   
         sleep(1)
-        print(requests.post(base + '/groups/change_owners',
+        requests.post(base + '/groups/change_owners',
                       headers=headers,
-                      data=json.dumps(data)).__dict__)
+                      data=json.dumps(data))
 
         return reply['response']['share_url']
 
+    def get_share_id(self, group_name):
+        if group_name not in self.groups:
+            return -2
+
+        group_id = self.groups[group_name]
+        url = base + '/groups/' + str(group_id)
+
+        response = requests.get(url, headers=headers)
+
+        return response.json()['response']['share_url']
 
     def add_member(self, group, user):
         
@@ -94,7 +104,7 @@ class API:
                              data=json.dumps(data)
         )
 
-        print(temp.__dict__)
+        
         
     @staticmethod
     def list_members(group):

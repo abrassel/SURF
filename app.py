@@ -76,6 +76,10 @@ def join(args, uid):
     
     api.add_member(api.groups[args], uid)
 
+    result = api.get_share_id(args)
+
+    api.send_msg(result)
+
 def create(args, uid):
     share = api.create_group(args, uid)
     response = 'Created group %s at %s' % (args,share)
