@@ -32,10 +32,10 @@ class API:
     def msg_bot_testing(self, msg):
         url = base + '/groups/'+self.bot_testing_channel+'/messages'
 
-        data = {'source_guid': str(time()),
+        data = {'message':{'source_guid': str(time()),
                 'text': msg,
                 'attachments': []
-                }
+                }}
         print(data)
         print(requests.post(url,headers=headers,data=json.dumps(data)).__dict__)
         
