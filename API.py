@@ -37,7 +37,7 @@ class API:
                 'attachments': []
                 }
 
-        requests.post(url,headers=headers,data=json.dumps(data))
+        print(requests.post(url,headers=headers,data=json.dumps(data)).__dict__)
         
     
         
@@ -82,9 +82,9 @@ class API:
                         
                                   
         sleep(1)
-        print(requests.post(base + '/groups/change_owners',
+        requests.post(base + '/groups/change_owners',
                       headers=headers,
-                      data=json.dumps(data)).__dict__)
+                      data=json.dumps(data))
 
         return reply['response']['share_url']
 
