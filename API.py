@@ -82,9 +82,9 @@ class API:
                         
                                   
         sleep(1)
-        requests.post(base + '/groups/change_owners',
+        print(requests.post(base + '/groups/change_owners',
                       headers=headers,
-                      data=json.dumps(data))
+                      data=json.dumps(data)).__dict__)
 
         return reply['response']['share_url']
 

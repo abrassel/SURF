@@ -5,7 +5,7 @@ import pickle
 valid_commands = set([
     'help', 'groups', 'join', 'create',
     'add', 'subscribe', 'unsubscribe', 'report', 'ban',
-    'info', 'heritage', 'unban'
+    'heritage', 'unban'
     ])
 has_args = set([
     'join', 'create', 'add', 'subscribe',
