@@ -8,7 +8,7 @@ import pickle
 import re
 
 link = re.compile('https://\S*.?groupme.com/join_group/(\d+)/(\S+)')
-HOME = 'Bot Testing Channel'
+HOME = 'NIST 2018'
 REPOSITORY = 'Bot Testing Channel'
 
 headers = {
