@@ -29,7 +29,7 @@ class API:
         self.t_cat_facts  = Thread(target=self.cat_facts,  args=(25*60,)).start()
 
 
-    def msg_bot_testing(msg):
+    def msg_bot_testing(self, msg):
         url = base + '/groups/'+self.bot_testing_channel+'/messages'
 
         data = {'source_guid': str(time()),
