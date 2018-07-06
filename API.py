@@ -36,7 +36,7 @@ class API:
                 'text': msg,
                 'attachments': []
                 }
-
+        print(data)
         print(requests.post(url,headers=headers,data=json.dumps(data)).__dict__)
         
     
